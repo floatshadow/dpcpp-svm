@@ -263,7 +263,7 @@ namespace svm_kernel {
         smem_size += ws_size * sizeof(float_type); //f_val2reduce
         smem_size += ws_size * sizeof(kernel_type); //kd
         smem_size += 2 * sizeof(float_type); //alpha diff
-        c_smo_solve_kernel << < 1, ws_size, smem_size >> >
+        c_smo_solve_kernel <<< 1, ws_size, smem_size >>>
                                             (y.device_data(), f_val.device_data(), alpha.device_data(), alpha_diff.device_data(),
                                                     working_set.device_data(), ws_size, Cp, Cn, k_mat_rows.device_data(), k_mat_diag.device_data(),
                                                     row_len, eps, diff.device_data(), max_iter);
@@ -280,7 +280,7 @@ namespace svm_kernel {
         smem_size += ws_size * sizeof(float_type); //f_val2reduce
         smem_size += ws_size * sizeof(kernel_type); //kd
         smem_size += 2 * sizeof(float_type); //alpha diff
-        nu_smo_solve_kernel << < 1, ws_size, smem_size >> >
+        nu_smo_solve_kernel <<< 1, ws_size, smem_size >>>
                                              (y.device_data(), f_val.device_data(), alpha.device_data(), alpha_diff.device_data(),
                                                      working_set.device_data(), ws_size, C, k_mat_rows.device_data(), k_mat_diag.device_data(),
                                                      row_len, eps, diff.device_data(), max_iter);

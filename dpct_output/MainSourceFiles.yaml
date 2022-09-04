@@ -1,0 +1,2463 @@
+---
+MainSourceFile:  MainSrcFiles_placehold
+Replacements:
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          41
+    Length:          0
+    ReplacementText: "#include <CL/sycl.hpp>\n#include <dpct/dpct.hpp>\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          74
+    Length:          0
+    ReplacementText: "\n#include <oneapi/mkl.hpp>\n#include <dpct/blas_utils.hpp>\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          75
+    Length:          22
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          207
+    Length:          11
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          441
+    Length:          0
+    ReplacementText: ', sycl::nd_item<3> item_ct1'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          728
+    Length:          11
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          905
+    Length:          0
+    ReplacementText: ', sycl::nd_item<3> item_ct1'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          1167
+    Length:          67
+    ReplacementText: 'sycl::exp(-(self_dot0[i] + self_dot1[j] - dot_product[idx] * 2) * gamma)'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          1257
+    Length:          11
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          1430
+    Length:          0
+    ReplacementText: ', sycl::nd_item<3> item_ct1'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          1721
+    Length:          82
+    ReplacementText: 'sycl::exp(-(self_dot1[self_dot0_idx[i]] + self_dot1[j] - dot_product[idx] * 2) * gamma)'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          1826
+    Length:          11
+    ReplacementText: 'SYCL_EXTERNAL '
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          2112
+    Length:          0
+    ReplacementText: ",\n                             sycl::nd_item<3> item_ct1"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          3200
+    Length:          11
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          3321
+    Length:          0
+    ReplacementText: ",\n                       sycl::nd_item<3> item_ct1"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          3387
+    Length:          46
+    ReplacementText: 'sycl::pown(gamma * dot_product[idx] + coef0, degree)'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          3456
+    Length:          11
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          3564
+    Length:          0
+    ReplacementText: ",\n                               sycl::nd_item<3> item_ct1"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          3630
+    Length:          39
+    ReplacementText: 'sycl::tanh(gamma * dot_product[idx] + coef0)'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          4047
+    Length:          0
+    ReplacementText: ' try '
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          4049
+    Length:          0
+    ReplacementText: "        /*\n        DPCT1038:58: When the kernel function name is used as a macro argument, the migration result may be incorrect. You need to verify the definition of the macro.\n        */\n        /*\n        DPCT1001:60: The statement could not be removed.\n        */\n        /*\n        DPCT1002:61: Special case error handling if-stmt was detected. You may need to rewrite this code.\n        */\n        /*\n        DPCT1010:62: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.\n        */\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          4057
+    Length:          266
+    ReplacementText: '0'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          4331
+    Length:          0
+    ReplacementText: "\n    catch (sycl::exception const &exc) {\n      std::cerr << exc.what() << \"Exception caught at file:\" << __FILE__ << \", line:\" << __LINE__ << std::endl;\n      std::exit(1);\n    }"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          4572
+    Length:          0
+    ReplacementText: ' try '
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          4574
+    Length:          0
+    ReplacementText: "        /*\n        DPCT1038:63: When the kernel function name is used as a macro argument, the migration result may be incorrect. You need to verify the definition of the macro.\n        */\n        /*\n        DPCT1001:64: The statement could not be removed.\n        */\n        /*\n        DPCT1002:65: Special case error handling if-stmt was detected. You may need to rewrite this code.\n        */\n        /*\n        DPCT1010:66: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.\n        */\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          4582
+    Length:          197
+    ReplacementText: '0'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          4787
+    Length:          0
+    ReplacementText: "\n    catch (sycl::exception const &exc) {\n      std::cerr << exc.what() << \"Exception caught at file:\" << __FILE__ << \", line:\" << __LINE__ << std::endl;\n      std::exit(1);\n    }"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          5010
+    Length:          0
+    ReplacementText: ' try '
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          5012
+    Length:          0
+    ReplacementText: "        /*\n        DPCT1038:67: When the kernel function name is used as a macro argument, the migration result may be incorrect. You need to verify the definition of the macro.\n        */\n        /*\n        DPCT1001:68: The statement could not be removed.\n        */\n        /*\n        DPCT1002:69: Special case error handling if-stmt was detected. You may need to rewrite this code.\n        */\n        /*\n        DPCT1010:70: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.\n        */\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          5020
+    Length:          154
+    ReplacementText: '0'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          5181
+    Length:          0
+    ReplacementText: "\n    catch (sycl::exception const &exc) {\n      std::cerr << exc.what() << \"Exception caught at file:\" << __FILE__ << \", line:\" << __LINE__ << std::endl;\n      std::exit(1);\n    }"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          5385
+    Length:          0
+    ReplacementText: ' try '
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          5387
+    Length:          0
+    ReplacementText: "        /*\n        DPCT1038:71: When the kernel function name is used as a macro argument, the migration result may be incorrect. You need to verify the definition of the macro.\n        */\n        /*\n        DPCT1001:72: The statement could not be removed.\n        */\n        /*\n        DPCT1002:73: Special case error handling if-stmt was detected. You may need to rewrite this code.\n        */\n        /*\n        DPCT1010:74: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.\n        */\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          5395
+    Length:          158
+    ReplacementText: '0'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          5560
+    Length:          0
+    ReplacementText: "\n    catch (sycl::exception const &exc) {\n      std::cerr << exc.what() << \"Exception caught at file:\" << __FILE__ << \", line:\" << __LINE__ << std::endl;\n      std::exit(1);\n    }"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          5678
+    Length:          0
+    ReplacementText: ' try '
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          5680
+    Length:          0
+    ReplacementText: "        /*\n        DPCT1038:75: When the kernel function name is used as a macro argument, the migration result may be incorrect. You need to verify the definition of the macro.\n        */\n        /*\n        DPCT1001:76: The statement could not be removed.\n        */\n        /*\n        DPCT1002:77: Special case error handling if-stmt was detected. You may need to rewrite this code.\n        */\n        /*\n        DPCT1010:78: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.\n        */\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          5688
+    Length:          91
+    ReplacementText: '0'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          5786
+    Length:          0
+    ReplacementText: "\n    catch (sycl::exception const &exc) {\n      std::cerr << exc.what() << \"Exception caught at file:\" << __FILE__ << \", line:\" << __LINE__ << std::endl;\n      std::exit(1);\n    }"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          5895
+    Length:          0
+    ReplacementText: ' try '
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          5897
+    Length:          0
+    ReplacementText: "        /*\n        DPCT1038:79: When the kernel function name is used as a macro argument, the migration result may be incorrect. You need to verify the definition of the macro.\n        */\n        /*\n        DPCT1001:80: The statement could not be removed.\n        */\n        /*\n        DPCT1002:81: Special case error handling if-stmt was detected. You may need to rewrite this code.\n        */\n        /*\n        DPCT1010:82: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.\n        */\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          5905
+    Length:          86
+    ReplacementText: '0'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          5998
+    Length:          0
+    ReplacementText: "\n    catch (sycl::exception const &exc) {\n      std::cerr << exc.what() << \"Exception caught at file:\" << __FILE__ << \", line:\" << __LINE__ << std::endl;\n      std::exit(1);\n    }"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          6004
+    Length:          16
+    ReplacementText: 'sycl::queue*'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          6033
+    Length:          18
+    ReplacementText: 'oneapi::mkl::index_base'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          6403
+    Length:          23
+    ReplacementText: 'handle = &dpct::get_default_queue()'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          6440
+    Length:          30
+    ReplacementText: 'descr = oneapi::mkl::index_base::zero'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          6484
+    Length:          56
+    ReplacementText: 'descr = oneapi::mkl::index_base::zero'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          6542
+    Length:          69
+    ReplacementText: "            /*\n            DPCT1026:91: The call to cusparseSetMatType was removed because the function call is redundant in DPC++.\n            */\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          6718
+    Length:          14
+    ReplacementText: SYCL_LANGUAGE_VERSION
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          6919
+    Length:          12
+    ReplacementText: int
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          6944
+    Length:          10
+    ReplacementText: '0'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          6963
+    Length:          0
+    ReplacementText: "        /*\n        DPCT1007:83: Migration of cusparseCreateCsr is not supported by the Intel(R) DPC++ Compatibility Tool.\n        */\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          7197
+    Length:          24
+    ReplacementText: 'oneapi::mkl::index_base::zero'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          7235
+    Length:          0
+    ReplacementText: "        /*\n        DPCT1007:84: Migration of cusparseCreateDnMat is not supported by the Intel(R) DPC++ Compatibility Tool.\n        */\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          7343
+    Length:          0
+    ReplacementText: "        /*\n        DPCT1007:85: Migration of cusparseCreateDnMat is not supported by the Intel(R) DPC++ Compatibility Tool.\n        */\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          7481
+    Length:          0
+    ReplacementText: "        /*\n        DPCT1007:86: Migration of cusparseSpMM_bufferSize is not supported by the Intel(R) DPC++ Compatibility Tool.\n        */\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          7521
+    Length:          32
+    ReplacementText: 'oneapi::mkl::transpose::nontrans'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          7555
+    Length:          28
+    ReplacementText: 'oneapi::mkl::transpose::trans'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          7770
+    Length:          42
+    ReplacementText: 'p_buffer = (void *)sycl::malloc_device(buffer_size, dpct::get_default_queue())'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          7815
+    Length:          0
+    ReplacementText: "        /*\n        DPCT1007:87: Migration of cusparseSpMM is not supported by the Intel(R) DPC++ Compatibility Tool.\n        */\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          7844
+    Length:          32
+    ReplacementText: 'oneapi::mkl::transpose::nontrans'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          7878
+    Length:          28
+    ReplacementText: 'oneapi::mkl::transpose::trans'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          8011
+    Length:          18
+    ReplacementText: 'sycl::free(p_buffer, dpct::get_default_queue())'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          8031
+    Length:          0
+    ReplacementText: "        /*\n        DPCT1007:88: Migration of cusparseDestroySpMat is not supported by the Intel(R) DPC++ Compatibility Tool.\n        */\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          8067
+    Length:          0
+    ReplacementText: "        /*\n        DPCT1007:89: Migration of cusparseDestroyDnMat is not supported by the Intel(R) DPC++ Compatibility Tool.\n        */\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Offset:          8103
+    Length:          0
+    ReplacementText: "        /*\n        DPCT1007:90: Migration of cusparseDestroyDnMat is not supported by the Intel(R) DPC++ Compatibility Tool.\n        */\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          41
+    Length:          0
+    ReplacementText: "#include <oneapi/dpl/execution>\n#include <oneapi/dpl/algorithm>\n#include <CL/sycl.hpp>\n#include <dpct/dpct.hpp>\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          93
+    Length:          15
+    ReplacementText: '<dpct/dpl_utils.hpp>'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          109
+    Length:          42
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          205
+    Length:          11
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          261
+    Length:          0
+    ReplacementText: ', sycl::nd_item<3> item_ct1'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          283
+    Length:          11
+    ReplacementText: 'item_ct1.get_local_id(2)'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          330
+    Length:          15
+    ReplacementText: "/*\n        DPCT1065:92: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance if there is no access to global memory.\n        */\n        item_ct1.barrier()"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          419
+    Length:          10
+    ReplacementText: 'item_ct1.get_local_range(2)'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          665
+    Length:          15
+    ReplacementText: "/*\n            DPCT1065:93: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance if there is no access to global memory.\n            */\n            item_ct1.barrier()"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          729
+    Length:          11
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          1128
+    Length:          0
+    ReplacementText: ",\n                       sycl::nd_item<3> item_ct1, uint8_t *dpct_local"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          1261
+    Length:          35
+    ReplacementText: 'auto shared_mem = (int *)dpct_local;'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          1830
+    Length:          11
+    ReplacementText: 'item_ct1.get_local_id(2)'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          2056
+    Length:          15
+    ReplacementText: "/*\n        DPCT1065:94: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance if there is no access to global memory.\n        */\n        item_ct1.barrier()"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          2385
+    Length:          0
+    ReplacementText: ', item_ct1'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          2525
+    Length:          15
+    ReplacementText: "/*\n            DPCT1065:95: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance if there is no access to global memory.\n            */\n            item_ct1.barrier()"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          2747
+    Length:          0
+    ReplacementText: ', item_ct1'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          2925
+    Length:          27
+    ReplacementText: 'sycl::max((double)eps, (double)(0.1f * local_diff))'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          3296
+    Length:          15
+    ReplacementText: "/*\n            DPCT1065:96: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance if there is no access to global memory.\n            */\n            item_ct1.barrier()"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          3721
+    Length:          0
+    ReplacementText: ', item_ct1'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          3889
+    Length:          71
+    ReplacementText: 'sycl::min((double)(y > 0 ? a : Cn - a), (double)((-up_value + f) / (kd[i] + kd[j2] - 2 * kIwsI)))'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          3974
+    Length:          15
+    ReplacementText: "/*\n            DPCT1065:97: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance if there is no access to global memory.\n            */\n            item_ct1.barrier()"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          4018
+    Length:          33
+    ReplacementText: 'sycl::min((double)(*alpha_i_diff), (double)(*alpha_j_diff))'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          4350
+    Length:          11
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          4736
+    Length:          0
+    ReplacementText: ",\n                        sycl::nd_item<3> item_ct1, uint8_t *dpct_local"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          4869
+    Length:          35
+    ReplacementText: 'auto shared_mem = (int *)dpct_local;'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          5438
+    Length:          11
+    ReplacementText: 'item_ct1.get_local_id(2)'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          5667
+    Length:          15
+    ReplacementText: "/*\n        DPCT1065:98: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance if there is no access to global memory.\n        */\n        item_ct1.barrier()"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          5940
+    Length:          15
+    ReplacementText: "/*\n            DPCT1065:99: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance if there is no access to global memory.\n            */\n            item_ct1.barrier()"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          6018
+    Length:          0
+    ReplacementText: ', item_ct1'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          6163
+    Length:          15
+    ReplacementText: "/*\n            DPCT1065:100: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance if there is no access to global memory.\n            */\n            item_ct1.barrier()"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          6409
+    Length:          0
+    ReplacementText: ', item_ct1'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          6554
+    Length:          15
+    ReplacementText: "/*\n            DPCT1065:101: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance if there is no access to global memory.\n            */\n            item_ct1.barrier()"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          6803
+    Length:          0
+    ReplacementText: ', item_ct1'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          6875
+    Length:          15
+    ReplacementText: "/*\n            DPCT1065:102: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance if there is no access to global memory.\n            */\n            item_ct1.barrier()"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          7124
+    Length:          0
+    ReplacementText: ', item_ct1'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          7221
+    Length:          55
+    ReplacementText: 'sycl::max((double)(low_value_p - up_value_p), (double)(low_value_n - up_value_n))'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          7341
+    Length:          26
+    ReplacementText: 'sycl::max((double)eps, (double)(0.1 * local_diff))'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          7711
+    Length:          15
+    ReplacementText: "/*\n            DPCT1065:103: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance if there is no access to global memory.\n            */\n            item_ct1.barrier()"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          8132
+    Length:          0
+    ReplacementText: ', item_ct1'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          8201
+    Length:          15
+    ReplacementText: "/*\n            DPCT1065:104: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance if there is no access to global memory.\n            */\n            item_ct1.barrier()"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          8622
+    Length:          0
+    ReplacementText: ', item_ct1'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          9202
+    Length:          70
+    ReplacementText: 'sycl::min((double)(y > 0 ? a : C - a), (double)((-up_value + f) / (kd[i] + kd[j2] - 2 * kIwsI)))'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          9286
+    Length:          15
+    ReplacementText: "/*\n            DPCT1065:105: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance if there is no access to global memory.\n            */\n            item_ct1.barrier()"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          9330
+    Length:          33
+    ReplacementText: 'sycl::min((double)(*alpha_i_diff), (double)(*alpha_j_diff))'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          10404
+    Length:          0
+    ReplacementText: "        /*\n        DPCT1049:106: The work-group size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the work-group size if needed.\n        */\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          10412
+    Length:          424
+    ReplacementText: "dpct::get_default_queue().submit(\n          [&](sycl::handler &cgh) {\n            sycl::accessor<uint8_t, 1, sycl::access_mode::read_write, sycl::access::target::local> dpct_local_acc_ct1(sycl::range<1>(smem_size), cgh);\n\n            auto y_device_data_ct0 = y.device_data();\n            auto f_val_device_data_ct1 = f_val.device_data();\n            auto alpha_device_data_ct2 = alpha.device_data();\n            auto alpha_diff_device_data_ct3 = alpha_diff.device_data();\n            auto working_set_device_data_ct4 = working_set.device_data();\n            auto k_mat_rows_device_data_ct8 = k_mat_rows.device_data();\n            auto k_mat_diag_device_data_ct9 = k_mat_diag.device_data();\n            auto diff_device_data_ct12 = diff.device_data();\n\n            cgh.parallel_for(\n              sycl::nd_range<3>(sycl::range<3>(1, 1, ws_size), sycl::range<3>(1, 1, ws_size)), \n              [=](sycl::nd_item<3> item_ct1) {\n                c_smo_solve_kernel(y_device_data_ct0, f_val_device_data_ct1, alpha_device_data_ct2, alpha_diff_device_data_ct3, working_set_device_data_ct4, ws_size, Cp, Cn, k_mat_rows_device_data_ct8, k_mat_diag_device_data_ct9, row_len, eps, diff_device_data_ct12, max_iter, item_ct1, dpct_local_acc_ct1.get_pointer());\n              });\n          });"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: true
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          10836
+    Length:          1
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          11597
+    Length:          0
+    ReplacementText: "        /*\n        DPCT1049:107: The work-group size passed to the SYCL kernel may exceed the limit. To get the device limit, query info::device::max_work_group_size. Adjust the work-group size if needed.\n        */\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          11605
+    Length:          423
+    ReplacementText: "dpct::get_default_queue().submit(\n          [&](sycl::handler &cgh) {\n            sycl::accessor<uint8_t, 1, sycl::access_mode::read_write, sycl::access::target::local> dpct_local_acc_ct1(sycl::range<1>(smem_size), cgh);\n\n            auto y_device_data_ct0 = y.device_data();\n            auto f_val_device_data_ct1 = f_val.device_data();\n            auto alpha_device_data_ct2 = alpha.device_data();\n            auto alpha_diff_device_data_ct3 = alpha_diff.device_data();\n            auto working_set_device_data_ct4 = working_set.device_data();\n            auto k_mat_rows_device_data_ct7 = k_mat_rows.device_data();\n            auto k_mat_diag_device_data_ct8 = k_mat_diag.device_data();\n            auto diff_device_data_ct11 = diff.device_data();\n\n            cgh.parallel_for(\n              sycl::nd_range<3>(sycl::range<3>(1, 1, ws_size), sycl::range<3>(1, 1, ws_size)), \n              [=](sycl::nd_item<3> item_ct1) {\n                nu_smo_solve_kernel(y_device_data_ct0, f_val_device_data_ct1, alpha_device_data_ct2, alpha_diff_device_data_ct3, working_set_device_data_ct4, ws_size, C, k_mat_rows_device_data_ct7, k_mat_diag_device_data_ct8, row_len, eps, diff_device_data_ct11, max_iter, item_ct1, dpct_local_acc_ct1.get_pointer());\n              });\n          });"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: true
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          12028
+    Length:          1
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          12041
+    Length:          11
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          12201
+    Length:          0
+    ReplacementText: ', sycl::nd_item<3> item_ct1'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          12853
+    Length:          0
+    ReplacementText: ' try '
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          12855
+    Length:          0
+    ReplacementText: "        /*\n        DPCT1038:108: When the kernel function name is used as a macro argument, the migration result may be incorrect. You need to verify the definition of the macro.\n        */\n        /*\n        DPCT1001:109: The statement could not be removed.\n        */\n        /*\n        DPCT1002:110: Special case error handling if-stmt was detected. You may need to rewrite this code.\n        */\n        /*\n        DPCT1010:111: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced with 0. You need to rewrite this code.\n        */\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          12863
+    Length:          163
+    ReplacementText: '0'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          13033
+    Length:          0
+    ReplacementText: "\n    catch (sycl::exception const &exc) {\n      std::cerr << exc.what() << \"Exception caught at file:\" << __FILE__ << \", line:\" << __LINE__ << std::endl;\n      std::exit(1);\n    }"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          13124
+    Length:          19
+    ReplacementText: 'dpct::sort'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Offset:          13289
+    Length:          12
+    ReplacementText: 'oneapi::dpl::less'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/model/nusvc.cpp'
+    Offset:          42
+    Length:          0
+    ReplacementText: "#include <CL/sycl.hpp>\n#include <dpct/dpct.hpp>\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/model/nusvc.cpp'
+    Offset:          120
+    Length:          0
+    ReplacementText: "\n#include <cmath>\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/model/nusvc.cpp'
+    Offset:          795
+    Length:          16
+    ReplacementText: 'fmin(1., sum_pos)'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/model/nusvc.cpp'
+    Offset:          955
+    Length:          16
+    ReplacementText: 'fmin(1., sum_neg)'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/model/nusvr.cpp'
+    Offset:          42
+    Length:          0
+    ReplacementText: "#include <CL/sycl.hpp>\n#include <dpct/dpct.hpp>\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/model/nusvr.cpp'
+    Offset:          120
+    Length:          0
+    ReplacementText: "\n#include <cmath>\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/model/nusvr.cpp'
+    Offset:          929
+    Length:          17
+    ReplacementText: 'fmin(sum, param.C)'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/model/svc.cpp'
+    Offset:          41
+    Length:          0
+    ReplacementText: "#include <CL/sycl.hpp>\n#include <dpct/dpct.hpp>\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/model/svc.cpp'
+    Offset:          197
+    Length:          0
+    ReplacementText: "\n#include <cmath>\n\n#include <algorithm>\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/model/svc.cpp'
+    Offset:          7192
+    Length:          17
+    ReplacementText: 'std::max(100, nrClass)'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/model/svc.cpp'
+    Offset:          10399
+    Length:          91
+    ReplacementText: 'fmax(sigmoidPredict(dec_values_data[l * n_binary_models + k], probA[k], probB[k]), min_prob)'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/model/svmmodel.cpp'
+    Offset:          42
+    Length:          0
+    ReplacementText: "#include <CL/sycl.hpp>\n#include <dpct/dpct.hpp>\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/model/svmmodel.cpp'
+    Offset:          192
+    Length:          0
+    ReplacementText: "\n#include <cmath>\n\n#include <algorithm>\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/model/svmmodel.cpp'
+    Offset:          3324
+    Length:          92
+    ReplacementText: 'std::min(size_t(free_mem / sizeof(float_type) / (sv.size() + k_mat.n_features())), size_t(10000))'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/solver/csmosolver.cpp'
+    Offset:          42
+    Length:          0
+    ReplacementText: "#include <CL/sycl.hpp>\n#include <dpct/dpct.hpp>\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/solver/csmosolver.cpp'
+    Offset:          200
+    Length:          0
+    ReplacementText: "\n#include <cmath>\n\n#include <algorithm>\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/solver/csmosolver.cpp'
+    Offset:          2032
+    Length:          62
+    ReplacementText: 'std::max(100000, ws_size > INT_MAX / 100 ? INT_MAX : 100 * ws_size)'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/solver/csmosolver.cpp'
+    Offset:          7945
+    Length:          28
+    ReplacementText: 'fmin(up_value, f_val_data[i])'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/solver/csmosolver.cpp'
+    Offset:          8043
+    Length:          29
+    ReplacementText: 'fmax(low_value, f_val_data[i])'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/solver/nusmosolver.cpp'
+    Offset:          42
+    Length:          0
+    ReplacementText: "#include <CL/sycl.hpp>\n#include <dpct/dpct.hpp>\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/solver/nusmosolver.cpp'
+    Offset:          126
+    Length:          0
+    ReplacementText: "\n#include <cmath>\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/solver/nusmosolver.cpp'
+    Offset:          1020
+    Length:          31
+    ReplacementText: 'fmin(up_value_p, -f_val_data[i])'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/solver/nusmosolver.cpp'
+    Offset:          1127
+    Length:          32
+    ReplacementText: 'fmax(low_value_p, -f_val_data[i])'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/solver/nusmosolver.cpp'
+    Offset:          1397
+    Length:          31
+    ReplacementText: 'fmin(up_value_n, -f_val_data[i])'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/solver/nusmosolver.cpp'
+    Offset:          1504
+    Length:          32
+    ReplacementText: 'fmax(low_value_n, -f_val_data[i])'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/svm_interface_api.cpp'
+    Offset:          36
+    Length:          0
+    ReplacementText: "#include <CL/sycl.hpp>\n#include <dpct/dpct.hpp>\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/svm_interface_api.cpp'
+    Offset:          371
+    Length:          0
+    ReplacementText: "\n#include <cmath>\n\n#include <algorithm>\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/svm_interface_api.cpp'
+    Offset:          732
+    Length:          0
+    ReplacementText: ' try '
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/svm_interface_api.cpp'
+    Offset:          1798
+    Length:          11
+    ReplacementText: 'std::min(n1, n2)'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/svm_interface_api.cpp'
+    Offset:          2183
+    Length:          0
+    ReplacementText: "        /*\n        DPCT1001:8: The statement could not be removed.\n        */\n        /*\n        DPCT1002:9: Special case error handling if-stmt was detected. You may need to rewrite this code.\n        */\n        /*\n        DPCT1093:10: The \"parser.gpu_id\" may not be the best XPU device. Adjust the selected device if needed.\n        */\n        /*\n        DPCT1003:11: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.\n        */\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/svm_interface_api.cpp'
+    Offset:          2191
+    Length:          40
+    ReplacementText: '0'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/svm_interface_api.cpp'
+    Offset:          3491
+    Length:          0
+    ReplacementText: "\n    catch (sycl::exception const &exc) {\n      std::cerr << exc.what() << \"Exception caught at file:\" << __FILE__ << \", line:\" << __LINE__ << std::endl;\n      std::exit(1);\n    }"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/svm_interface_api.cpp'
+    Offset:          4554
+    Length:          0
+    ReplacementText: ' try '
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/svm_interface_api.cpp'
+    Offset:          5422
+    Length:          0
+    ReplacementText: "        /*\n        DPCT1001:12: The statement could not be removed.\n        */\n        /*\n        DPCT1002:13: Special case error handling if-stmt was detected. You may need to rewrite this code.\n        */\n        /*\n        DPCT1093:14: The \"parser.gpu_id\" may not be the best XPU device. Adjust the selected device if needed.\n        */\n        /*\n        DPCT1003:15: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.\n        */\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/svm_interface_api.cpp'
+    Offset:          5430
+    Length:          40
+    ReplacementText: '0'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/svm_interface_api.cpp'
+    Offset:          6115
+    Length:          0
+    ReplacementText: "\n    catch (sycl::exception const &exc) {\n      std::cerr << exc.what() << \"Exception caught at file:\" << __FILE__ << \", line:\" << __LINE__ << std::endl;\n      std::exit(1);\n    }"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncarray.cpp'
+    Offset:          41
+    Length:          0
+    ReplacementText: "#include <CL/sycl.hpp>\n#include <dpct/dpct.hpp>\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncarray.cpp'
+    Offset:          1836
+    Length:          0
+    ReplacementText: ' try '
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncarray.cpp'
+    Offset:          1854
+    Length:          0
+    ReplacementText: "    /*\n    DPCT1001:5: The statement could not be removed.\n    */\n    /*\n    DPCT1002:6: Special case error handling if-stmt was detected. You may need to rewrite this code.\n    */\n    /*\n    DPCT1003:7: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.\n    */\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncarray.cpp'
+    Offset:          1858
+    Length:          56
+    ReplacementText: '0'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncarray.cpp'
+    Offset:          1974
+    Length:          0
+    ReplacementText: "\ncatch (sycl::exception const &exc) {\n  std::cerr << exc.what() << \"Exception caught at file:\" << __FILE__ << \", line:\" << __LINE__ << std::endl;\n  std::exit(1);\n}"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+    Offset:          42
+    Length:          0
+    ReplacementText: "#include <CL/sycl.hpp>\n#include <dpct/dpct.hpp>\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+    Offset:          541
+    Length:          0
+    ReplacementText: ' try '
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+    Offset:          903
+    Length:          0
+    ReplacementText: "                /*\n                DPCT1001:16: The statement could not be removed.\n                */\n                /*\n                DPCT1002:17: Special case error handling if-stmt was detected. You may need to rewrite this code.\n                */\n                /*\n                DPCT1003:18: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.\n                */\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+    Offset:          919
+    Length:          32
+    ReplacementText: '0'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+    Offset:          1027
+    Length:          0
+    ReplacementText: "\n    catch (sycl::exception const &exc) {\n      std::cerr << exc.what() << \"Exception caught at file:\" << __FILE__ << \", line:\" << __LINE__ << std::endl;\n      std::exit(1);\n    }"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+    Offset:          1411
+    Length:          0
+    ReplacementText: ' try '
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+    Offset:          1780
+    Length:          0
+    ReplacementText: "                    /*\n                    DPCT1003:21: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.\n                    */\n                    /*\n                    DPCT1001:19: The statement could not be removed.\n                    */\n                    /*\n                    DPCT1002:20: Special case error handling if-stmt was detected. You may need to rewrite this code.\n                    */\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+    Offset:          1800
+    Length:          44
+    ReplacementText: '0'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+    Offset:          1846
+    Length:          0
+    ReplacementText: "                    /*\n                    DPCT1001:22: The statement could not be removed.\n                    */\n                    /*\n                    DPCT1002:23: Special case error handling if-stmt was detected. You may need to rewrite this code.\n                    */\n                    /*\n                    DPCT1003:24: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.\n                    */\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+    Offset:          1866
+    Length:          42
+    ReplacementText: '0'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+    Offset:          1970
+    Length:          0
+    ReplacementText: "                /*\n                DPCT1001:25: The statement could not be removed.\n                */\n                /*\n                DPCT1002:26: Special case error handling if-stmt was detected. You may need to rewrite this code.\n                */\n                /*\n                DPCT1003:27: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.\n                */\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+    Offset:          1986
+    Length:          75
+    ReplacementText: '0'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+    Offset:          2192
+    Length:          0
+    ReplacementText: "\n    catch (sycl::exception const &exc) {\n      std::cerr << exc.what() << \"Exception caught at file:\" << __FILE__ << \", line:\" << __LINE__ << std::endl;\n      std::exit(1);\n    }"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+    Offset:          2224
+    Length:          0
+    ReplacementText: ' try '
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+    Offset:          2299
+    Length:          0
+    ReplacementText: "                /*\n                DPCT1003:30: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.\n                */\n                /*\n                DPCT1001:28: The statement could not be removed.\n                */\n                /*\n                DPCT1002:29: Special case error handling if-stmt was detected. You may need to rewrite this code.\n                */\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+    Offset:          2315
+    Length:          42
+    ReplacementText: '0'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+    Offset:          2359
+    Length:          0
+    ReplacementText: "                /*\n                DPCT1001:31: The statement could not be removed.\n                */\n                /*\n                DPCT1002:32: Special case error handling if-stmt was detected. You may need to rewrite this code.\n                */\n                /*\n                DPCT1003:33: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.\n                */\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+    Offset:          2375
+    Length:          44
+    ReplacementText: '0'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+    Offset:          2628
+    Length:          0
+    ReplacementText: "                    /*\n                    DPCT1003:36: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.\n                    */\n                    /*\n                    DPCT1001:34: The statement could not be removed.\n                    */\n                    /*\n                    DPCT1002:35: Special case error handling if-stmt was detected. You may need to rewrite this code.\n                    */\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+    Offset:          2648
+    Length:          42
+    ReplacementText: '0'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+    Offset:          2692
+    Length:          0
+    ReplacementText: "                    /*\n                    DPCT1001:37: The statement could not be removed.\n                    */\n                    /*\n                    DPCT1002:38: Special case error handling if-stmt was detected. You may need to rewrite this code.\n                    */\n                    /*\n                    DPCT1003:39: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.\n                    */\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+    Offset:          2712
+    Length:          44
+    ReplacementText: '0'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+    Offset:          2820
+    Length:          0
+    ReplacementText: "                /*\n                DPCT1001:40: The statement could not be removed.\n                */\n                /*\n                DPCT1002:41: Special case error handling if-stmt was detected. You may need to rewrite this code.\n                */\n                /*\n                DPCT1003:42: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.\n                */\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+    Offset:          2836
+    Length:          75
+    ReplacementText: '0'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+    Offset:          3038
+    Length:          0
+    ReplacementText: "\n    catch (sycl::exception const &exc) {\n      std::cerr << exc.what() << \"Exception caught at file:\" << __FILE__ << \", line:\" << __LINE__ << std::endl;\n      std::exit(1);\n    }"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+    Offset:          3364
+    Length:          0
+    ReplacementText: ' try '
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+    Offset:          3442
+    Length:          0
+    ReplacementText: "            /*\n            DPCT1001:43: The statement could not be removed.\n            */\n            /*\n            DPCT1002:44: Special case error handling if-stmt was detected. You may need to rewrite this code.\n            */\n            /*\n            DPCT1003:45: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.\n            */\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+    Offset:          3454
+    Length:          35
+    ReplacementText: '0'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+    Offset:          3665
+    Length:          0
+    ReplacementText: "\n    catch (sycl::exception const &exc) {\n      std::cerr << exc.what() << \"Exception caught at file:\" << __FILE__ << \", line:\" << __LINE__ << std::endl;\n      std::exit(1);\n    }"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-predict.cpp'
+    Offset:          43
+    Length:          0
+    ReplacementText: "#include <CL/sycl.hpp>\n#include <dpct/dpct.hpp>\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-predict.cpp'
+    Offset:          433
+    Length:          0
+    ReplacementText: ' try '
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-predict.cpp'
+    Offset:          1624
+    Length:          0
+    ReplacementText: "        /*\n        DPCT1001:54: The statement could not be removed.\n        */\n        /*\n        DPCT1002:55: Special case error handling if-stmt was detected. You may need to rewrite this code.\n        */\n        /*\n        DPCT1093:56: The \"parser.gpu_id\" may not be the best XPU device. Adjust the selected device if needed.\n        */\n        /*\n        DPCT1003:57: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.\n        */\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-predict.cpp'
+    Offset:          1632
+    Length:          40
+    ReplacementText: '0'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-predict.cpp'
+    Offset:          3460
+    Length:          0
+    ReplacementText: "\ncatch (sycl::exception const &exc) {\n  std::cerr << exc.what() << \"Exception caught at file:\" << __FILE__ << \", line:\" << __LINE__ << std::endl;\n  std::exit(1);\n}"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-scikit.cpp'
+    Offset:          34
+    Length:          0
+    ReplacementText: "#include <CL/sycl.hpp>\n#include <dpct/dpct.hpp>\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-scikit.cpp'
+    Offset:          1765
+    Length:          0
+    ReplacementText: ' try '
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-scikit.cpp'
+    Offset:          1783
+    Length:          0
+    ReplacementText: "        /*\n        DPCT1001:46: The statement could not be removed.\n        */\n        /*\n        DPCT1002:47: Special case error handling if-stmt was detected. You may need to rewrite this code.\n        */\n        /*\n        DPCT1093:48: The \"gpu_id\" may not be the best XPU device. Adjust the selected device if needed.\n        */\n        /*\n        DPCT1003:49: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.\n        */\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-scikit.cpp'
+    Offset:          1791
+    Length:          33
+    ReplacementText: '0'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-scikit.cpp'
+    Offset:          4924
+    Length:          0
+    ReplacementText: "\n    catch (sycl::exception const &exc) {\n      std::cerr << exc.what() << \"Exception caught at file:\" << __FILE__ << \", line:\" << __LINE__ << std::endl;\n      std::exit(1);\n    }"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-scikit.cpp'
+    Offset:          6228
+    Length:          0
+    ReplacementText: ' try '
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-scikit.cpp'
+    Offset:          6247
+    Length:          0
+    ReplacementText: "        /*\n        DPCT1001:50: The statement could not be removed.\n        */\n        /*\n        DPCT1002:51: Special case error handling if-stmt was detected. You may need to rewrite this code.\n        */\n        /*\n        DPCT1093:52: The \"gpu_id\" may not be the best XPU device. Adjust the selected device if needed.\n        */\n        /*\n        DPCT1003:53: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.\n        */\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-scikit.cpp'
+    Offset:          6255
+    Length:          33
+    ReplacementText: '0'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-scikit.cpp'
+    Offset:          9380
+    Length:          0
+    ReplacementText: "\n    catch (sycl::exception const &exc) {\n      std::cerr << exc.what() << \"Exception caught at file:\" << __FILE__ << \", line:\" << __LINE__ << std::endl;\n      std::exit(1);\n    }"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-train.cpp'
+    Offset:          43
+    Length:          0
+    ReplacementText: "#include <CL/sycl.hpp>\n#include <dpct/dpct.hpp>\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-train.cpp'
+    Offset:          328
+    Length:          0
+    ReplacementText: "\n#include <cmath>\n\n#include <algorithm>\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-train.cpp'
+    Offset:          409
+    Length:          0
+    ReplacementText: ' try '
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-train.cpp'
+    Offset:          2305
+    Length:          11
+    ReplacementText: 'std::min(n1, n2)'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-train.cpp'
+    Offset:          2857
+    Length:          0
+    ReplacementText: "        /*\n        DPCT1001:0: The statement could not be removed.\n        */\n        /*\n        DPCT1002:1: Special case error handling if-stmt was detected. You may need to rewrite this code.\n        */\n        /*\n        DPCT1093:2: The \"parser.gpu_id\" may not be the best XPU device. Adjust the selected device if needed.\n        */\n        /*\n        DPCT1003:3: Migrated API does not return error code. (*, 0) is inserted. You may need to rewrite this code.\n        */\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-train.cpp'
+    Offset:          2865
+    Length:          40
+    ReplacementText: '0'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-train.cpp'
+    Offset:          4542
+    Length:          0
+    ReplacementText: "\ncatch (sycl::exception const &exc) {\n  std::cerr << exc.what() << \"Exception caught at file:\" << __FILE__ << \", line:\" << __LINE__ << std::endl;\n  std::exit(1);\n}"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+MainSourceFilesDigest:
+  - MainSourceFile:  '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+    Digest:          9dad769ba45eab29c61d33ed39d21be8
+  - MainSourceFile:  '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+    Digest:          70e09eeb137c8087541e16a90b590a96
+  - MainSourceFile:  '/home/yuan/zsy/thundersvm-master/src/thundersvm/model/nusvc.cpp'
+    Digest:          d1180fee5301a2892969a496c6aafa30
+  - MainSourceFile:  '/home/yuan/zsy/thundersvm-master/src/thundersvm/model/nusvr.cpp'
+    Digest:          987ed5ab27d0040c443ccc5576487b06
+  - MainSourceFile:  '/home/yuan/zsy/thundersvm-master/src/thundersvm/model/svc.cpp'
+    Digest:          8dd07a2062966a62a04331e8dfd4f7cb
+  - MainSourceFile:  '/home/yuan/zsy/thundersvm-master/src/thundersvm/model/svmmodel.cpp'
+    Digest:          dc03e08e9599b8a6ea096b7c781e0f88
+  - MainSourceFile:  '/home/yuan/zsy/thundersvm-master/src/thundersvm/solver/csmosolver.cpp'
+    Digest:          c6859b075057e9ba243469d2fad90fd3
+  - MainSourceFile:  '/home/yuan/zsy/thundersvm-master/src/thundersvm/solver/nusmosolver.cpp'
+    Digest:          36775461ddec8c78d19c6cc2700e6d04
+  - MainSourceFile:  '/home/yuan/zsy/thundersvm-master/src/thundersvm/svm_interface_api.cpp'
+    Digest:          8ce8921f06f0fa32e7f0524030a22295
+  - MainSourceFile:  '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncarray.cpp'
+    Digest:          d0e5c1919cf97c2f811a686649ae1c37
+  - MainSourceFile:  '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+    Digest:          8c247e40d7e0be058308cf607309f8a5
+  - MainSourceFile:  '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-predict.cpp'
+    Digest:          08b6ae709df870371f6e330615ccfc42
+  - MainSourceFile:  '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-scikit.cpp'
+    Digest:          cf38f1ca8f3c6c3f93dc264af885940f
+  - MainSourceFile:  '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-train.cpp'
+    Digest:          584a388b1d21170f82fd0ab4f64b62e8
+DpctVersion:     2022.1.0
+MainHelperFileName: dpct
+USMLevel:        ''
+FeatureMap:
+  algorithm.h:
+    sort:
+      IsCalled:        true
+      CallerSrcFiles:
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+      FeatureName:     sort
+      SubFeatureMap:   {}
+  device.hpp:
+    dev_mgr:
+      IsCalled:        true
+      CallerSrcFiles:
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/svm_interface_api.cpp'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncarray.cpp'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-predict.cpp'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-scikit.cpp'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-train.cpp'
+      FeatureName:     dev_mgr
+      SubFeatureMap:
+        dev_mgr_1:
+          IsCalled:        true
+          CallerSrcFiles:
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/svm_interface_api.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncarray.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-predict.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-scikit.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-train.cpp'
+          FeatureName:     dev_mgr
+          SubFeatureMap:   {}
+        dev_mgr_2:
+          IsCalled:        true
+          CallerSrcFiles:
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/svm_interface_api.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncarray.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-predict.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-scikit.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-train.cpp'
+          FeatureName:     dev_mgr
+          SubFeatureMap:   {}
+        dev_mgr_3:
+          IsCalled:        true
+          CallerSrcFiles:
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/svm_interface_api.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncarray.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-predict.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-scikit.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-train.cpp'
+          FeatureName:     dev_mgr
+          SubFeatureMap:   {}
+        dev_mgr_4:
+          IsCalled:        true
+          CallerSrcFiles:
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/svm_interface_api.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncarray.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-predict.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-scikit.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-train.cpp'
+          FeatureName:     dev_mgr
+          SubFeatureMap:   {}
+        dev_mgr_check_id:
+          IsCalled:        true
+          CallerSrcFiles:
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/svm_interface_api.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncarray.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-predict.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-scikit.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-train.cpp'
+          FeatureName:     'dev_mgr::check_id'
+          SubFeatureMap:   {}
+        dev_mgr_current_device:
+          IsCalled:        true
+          CallerSrcFiles:
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncarray.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+          FeatureName:     'dev_mgr::current_device'
+          SubFeatureMap:   {}
+        dev_mgr_current_device_id:
+          IsCalled:        true
+          CallerSrcFiles:
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncarray.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+          FeatureName:     'dev_mgr::current_device_id'
+          SubFeatureMap:   {}
+        dev_mgr_select_device:
+          IsCalled:        true
+          CallerSrcFiles:
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/svm_interface_api.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-predict.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-scikit.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-train.cpp'
+          FeatureName:     'dev_mgr::select_device'
+          SubFeatureMap:   {}
+    device_ext:
+      IsCalled:        true
+      CallerSrcFiles:
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/svm_interface_api.cpp'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncarray.cpp'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-predict.cpp'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-scikit.cpp'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-train.cpp'
+      FeatureName:     device_ext
+      SubFeatureMap:
+        device_ext_1:
+          IsCalled:        true
+          CallerSrcFiles:
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/svm_interface_api.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncarray.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-predict.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-scikit.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-train.cpp'
+          FeatureName:     device_ext
+          SubFeatureMap:   {}
+        device_ext_2:
+          IsCalled:        true
+          CallerSrcFiles:
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/svm_interface_api.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncarray.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-predict.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-scikit.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-train.cpp'
+          FeatureName:     device_ext
+          SubFeatureMap:   {}
+        device_ext_default_queue:
+          IsCalled:        true
+          CallerSrcFiles:
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncarray.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+          FeatureName:     'device_ext::default_queue'
+          SubFeatureMap:   {}
+    exception_handler:
+      IsCalled:        true
+      CallerSrcFiles:
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/svm_interface_api.cpp'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncarray.cpp'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-predict.cpp'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-scikit.cpp'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-train.cpp'
+      FeatureName:     exception_handler
+      SubFeatureMap:   {}
+    get_default_queue:
+      IsCalled:        true
+      CallerSrcFiles:
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncarray.cpp'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+      FeatureName:     get_default_queue
+      SubFeatureMap:   {}
+    get_tid:
+      IsCalled:        true
+      CallerSrcFiles:
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/kernelmatrix_kernel.cu'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/svm_interface_api.cpp'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncarray.cpp'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-predict.cpp'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-scikit.cpp'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/thundersvm-train.cpp'
+      FeatureName:     get_tid
+      SubFeatureMap:   {}
+  dpct.hpp:
+    non_local_include_dependency:
+      IsCalled:        true
+      CallerSrcFiles:
+        - ''
+      FeatureName:     ''
+      SubFeatureMap:   {}
+  dpl_utils.hpp:
+    non_local_include_dependency:
+      IsCalled:        true
+      CallerSrcFiles:
+        - ''
+      FeatureName:     ''
+      SubFeatureMap:   {}
+  functional.h:
+    __less:
+      IsCalled:        true
+      CallerSrcFiles:
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+      FeatureName:     __less
+      SubFeatureMap:   {}
+    compare_key_fun:
+      IsCalled:        true
+      CallerSrcFiles:
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/kernel/smo_kernel.cu'
+      FeatureName:     compare_key_fun
+      SubFeatureMap:   {}
+  memory.hpp:
+    dpct_memcpy:
+      IsCalled:        true
+      CallerSrcFiles:
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+      FeatureName:     dpct_memcpy
+      SubFeatureMap:   {}
+    dpct_memcpy_2d:
+      IsCalled:        true
+      CallerSrcFiles:
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+      FeatureName:     dpct_memcpy
+      SubFeatureMap:   {}
+    dpct_memcpy_2d_3d_pitch_detail:
+      IsCalled:        true
+      CallerSrcFiles:
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+      FeatureName:     dpct_memcpy
+      SubFeatureMap:   {}
+    dpct_memcpy_2d_pitch_detail:
+      IsCalled:        true
+      CallerSrcFiles:
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+      FeatureName:     dpct_memcpy
+      SubFeatureMap:   {}
+    dpct_memcpy_3d:
+      IsCalled:        true
+      CallerSrcFiles:
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+      FeatureName:     dpct_memcpy
+      SubFeatureMap:   {}
+    dpct_memcpy_3d_detail:
+      IsCalled:        true
+      CallerSrcFiles:
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+      FeatureName:     dpct_memcpy
+      SubFeatureMap:   {}
+    dpct_memcpy_detail:
+      IsCalled:        true
+      CallerSrcFiles:
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+      FeatureName:     dpct_memcpy
+      SubFeatureMap:   {}
+    dpct_memset:
+      IsCalled:        true
+      CallerSrcFiles:
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncarray.cpp'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+      FeatureName:     dpct_memset
+      SubFeatureMap:   {}
+    dpct_memset_2d:
+      IsCalled:        true
+      CallerSrcFiles:
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncarray.cpp'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+      FeatureName:     dpct_memset
+      SubFeatureMap:   {}
+    dpct_memset_2d_detail:
+      IsCalled:        true
+      CallerSrcFiles:
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncarray.cpp'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+      FeatureName:     dpct_memset
+      SubFeatureMap:   {}
+    dpct_memset_3d:
+      IsCalled:        true
+      CallerSrcFiles:
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncarray.cpp'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+      FeatureName:     dpct_memset
+      SubFeatureMap:   {}
+    dpct_memset_3d_detail:
+      IsCalled:        true
+      CallerSrcFiles:
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncarray.cpp'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+      FeatureName:     dpct_memset
+      SubFeatureMap:   {}
+    dpct_memset_detail:
+      IsCalled:        true
+      CallerSrcFiles:
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncarray.cpp'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+      FeatureName:     dpct_memset
+      SubFeatureMap:   {}
+    get_memcpy_direction:
+      IsCalled:        true
+      CallerSrcFiles:
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+      FeatureName:     get_memcpy_direction
+      SubFeatureMap:   {}
+    get_pointer_attribute:
+      IsCalled:        true
+      CallerSrcFiles:
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+      FeatureName:     get_pointer_attribute
+      SubFeatureMap:   {}
+    mem_mgr:
+      IsCalled:        true
+      CallerSrcFiles:
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncarray.cpp'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+      FeatureName:     mem_mgr
+      SubFeatureMap:
+        mem_mgr_1:
+          IsCalled:        true
+          CallerSrcFiles:
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncarray.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+          FeatureName:     mem_mgr
+          SubFeatureMap:   {}
+        mem_mgr_2:
+          IsCalled:        true
+          CallerSrcFiles:
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncarray.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+          FeatureName:     mem_mgr
+          SubFeatureMap:   {}
+        mem_mgr_get_map_iterator:
+          IsCalled:        true
+          CallerSrcFiles:
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncarray.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+          FeatureName:     'mem_mgr::get_map_iterator'
+          SubFeatureMap:   {}
+        mem_mgr_is_device_ptr:
+          IsCalled:        true
+          CallerSrcFiles:
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncarray.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+          FeatureName:     'mem_mgr::is_device_ptr'
+          SubFeatureMap:   {}
+        mem_mgr_translate_ptr:
+          IsCalled:        true
+          CallerSrcFiles:
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncarray.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+          FeatureName:     'mem_mgr::translate_ptr'
+          SubFeatureMap:   {}
+    memcpy_direction:
+      IsCalled:        true
+      CallerSrcFiles:
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+      FeatureName:     memcpy_direction
+      SubFeatureMap:   {}
+    pitched_data:
+      IsCalled:        true
+      CallerSrcFiles:
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncarray.cpp'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+      FeatureName:     pitched_data
+      SubFeatureMap:
+        pitched_data_get_data_ptr:
+          IsCalled:        true
+          CallerSrcFiles:
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncarray.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+          FeatureName:     'pitched_data::get_data_ptr'
+          SubFeatureMap:   {}
+        pitched_data_get_pitch:
+          IsCalled:        true
+          CallerSrcFiles:
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncarray.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+          FeatureName:     'pitched_data::get_pitch'
+          SubFeatureMap:   {}
+        pitched_data_get_y:
+          IsCalled:        true
+          CallerSrcFiles:
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncarray.cpp'
+            - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+          FeatureName:     'pitched_data::get_y'
+          SubFeatureMap:   {}
+    pitched_data_1:
+      IsCalled:        true
+      CallerSrcFiles:
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncarray.cpp'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+      FeatureName:     pitched_data
+      SubFeatureMap:   {}
+    pointer_access_attribute:
+      IsCalled:        true
+      CallerSrcFiles:
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+      FeatureName:     pointer_access_attribute
+      SubFeatureMap:   {}
+    typedef_buffer_t:
+      IsCalled:        true
+      CallerSrcFiles:
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncarray.cpp'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+      FeatureName:     buffer_t
+      SubFeatureMap:   {}
+    typedef_byte_t:
+      IsCalled:        true
+      CallerSrcFiles:
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncarray.cpp'
+        - '/home/yuan/zsy/thundersvm-master/src/thundersvm/syncmem.cpp'
+      FeatureName:     byte_t
+      SubFeatureMap:   {}
+CompileTargets:  {}
+OptionMap:
+  AsyncHandler:
+    Value:           'false'
+    Specified:       false
+  CommentsEnabled:
+    Value:           'false'
+    Specified:       false
+  CompilationsDir:
+    Value:           '/home/yuan/zsy/thundersvm-master/build'
+    Specified:       true
+  CtadEnabled:
+    Value:           'false'
+    Specified:       false
+  CustomHelperFileName:
+    Value:           dpct
+    Specified:       false
+  ExperimentalFlag:
+    Value:           '0'
+    Specified:       false
+  ExplicitClNamespace:
+    Value:           'false'
+    Specified:       false
+  ExplicitNamespace:
+    Value:           '20'
+    Specified:       false
+  ExtensionFlag:
+    Value:           '4294967295'
+    Specified:       false
+  NDRangeDim:
+    Value:           '3'
+    Specified:       false
+  NoDRYPattern:
+    Value:           'false'
+    Specified:       false
+  OptimizeMigration:
+    Value:           'false'
+    Specified:       false
+  ProcessAll:
+    Value:           'true'
+    Specified:       true
+  RuleFile:
+    Value:           ''
+    Specified:       false
+  SyclNamedLambda:
+    Value:           'false'
+    Specified:       false
+  UsmLevel:
+    Value:           '1'
+    Specified:       false
+...
