@@ -4,11 +4,6 @@
 
 #ifndef THUNDERSVM_THUNDERSVM_H
 #define THUNDERSVM_THUNDERSVM_H
-#include <cstdlib>
-#include "util/log.h"
-#include <string>
-#include <vector>
-#include <thundersvm/config.h>
 #include "math.h"
 #include "util/common.h"
 #ifdef USE_ONEAPI
