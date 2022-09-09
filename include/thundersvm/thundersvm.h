@@ -4,16 +4,19 @@
 
 #ifndef THUNDERSVM_THUNDERSVM_H
 #define THUNDERSVM_THUNDERSVM_H
-#include <cstdlib>
-#include "util/log.h"
-#include <string>
-#include <vector>
-#include <thundersvm/config.h>
 #include "math.h"
 #include "util/common.h"
+#include "util/log.h"
+#include <CL/sycl.hpp>
+#include <cstdlib>
+#include <string>
+#include <thundersvm/config.h>
+#include <vector>
 using std::string;
 using std::vector;
 typedef double float_type;
+
+#define USE_ONEAPI
 
 #ifdef USE_DOUBLE
 typedef double kernel_type;
