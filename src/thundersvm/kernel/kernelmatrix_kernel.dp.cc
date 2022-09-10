@@ -1,14 +1,9 @@
-#include "oneapi/mkl/spblas.hpp"
-#include "oneapi/mkl/types.hpp"
 #include "thundersvm/thundersvm.h"
 #include <thundersvm/kernel/kernelmatrix_sycl_kernel.h>
-#ifdef USE_ONEAPI
+#include <thundersvm/util/sycl_common.h>
 #include <oneapi/mkl.hpp>
 using namespace oneapi::mkl;
-#else
-#include <Eigen/Dense>
-#include <Eigen/Sparse>
-#endif
+
 
 namespace svm_kernel {
     void
@@ -155,33 +150,22 @@ namespace svm_kernel {
     oneapi::mkl::sparse::matrix_handle_t handle;
 #endif
 
-    void dns_csr_mul(const cl::sycl::queue& q, int m, int n, int k, const SyncArray<kernel_type> &dense_mat, const SyncArray<kernel_type> &csr_val,
+    void dns_csr_mul(int m, int n, int k, const SyncArray<kernel_type> &dense_mat, const SyncArray<kernel_type> &csr_val,
                      const SyncArray<int> &csr_row_ptr, const SyncArray<int> &csr_col_ind, int nnz,
                      SyncArray<kernel_type> &result) {
-#ifdef USE_ONEAPI
         sparse::init_matrix_handle(&handle);
         sparse::set_matrix_property(handle, sparse::property::sorted);
         kernel_type one(1.0);
         kernel_type zero(0.0);
-
+        auto &q = thunder::get_sycl_queue();
         sparse::set_csr_data(handle, m, n, index_base::zero, 
                             const_cast<int *>(csr_row_ptr.device_data()), 
                             const_cast<int *>(csr_col_ind.device_data()), 
                             const_cast<kernel_type *>(csr_val.device_data()));
-        auto gemm_event = sparse::gemm(const_cast<cl::sycl::queue &>(q), layout::col_major, transpose::nontrans, transpose::trans,
+        auto gemm_event = sparse::gemm(q, layout::col_major, transpose::nontrans, transpose::trans,
                                              one, handle, const_cast<kernel_type *>(dense_mat.device_data()), k, n,
                                              zero, const_cast<kernel_type *>(result.device_data()), m,
                                              {});
         sparse::release_matrix_handle(&handle, {gemm_event});
-#else
-        Eigen::Map<const Eigen::Matrix<kernel_type, Eigen::Dynamic, Eigen::Dynamic, Eigen::ColMajor>> denseMat(dense_mat.host_data(), k, n);
-        Eigen::Map<const Eigen::SparseMatrix<kernel_type, Eigen::RowMajor>> sparseMat(m, k, nnz, csr_row_ptr.host_data(),
-                                                                                csr_col_ind.host_data(),
-                                                                                csr_val.host_data());
-        Eigen::Matrix<kernel_type, Eigen::Dynamic, Eigen::Dynamic, Eigen::ColMajor> retMat = sparseMat * denseMat;
-        Eigen::Map<Eigen::Matrix<kernel_type, Eigen::Dynamic, Eigen::Dynamic, Eigen::ColMajor> >(result.host_data(),
-                                                                                           retMat.rows(),
-                                                                                           retMat.cols()) = retMat;
-#endif
     }
 } // end namespace svm_kernel

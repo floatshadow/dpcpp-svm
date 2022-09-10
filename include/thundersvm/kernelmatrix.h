@@ -61,9 +61,7 @@ private:
     size_t n_instances_;
     size_t n_features_;
     SvmParam param;
-#ifdef USE_ONEAPI
-    sycl::queue q_;
-#endif
+
     void dns_csr_mul(const SyncArray<kernel_type> &dense_mat, int n_rows, SyncArray<kernel_type> &result) const;
 #if !defined(USE_CUDA) && !defined(USE_ONEAPI)
     void csr_csr_mul(const SyncArray<kernel_type> &ws_val, int n_rows, const SyncArray<int> &ws_col_ind,

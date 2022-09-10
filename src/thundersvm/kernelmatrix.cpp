@@ -78,6 +78,7 @@ KernelMatrix::KernelMatrix(const DataSet::node2d &instances, SvmParam param) {
 void KernelMatrix::get_rows(const SyncArray<int> &idx,
                             SyncArray<kernel_type> &kernel_rows) const {//compute multiple rows of kernel matrix according to idx
     CHECK_GE(kernel_rows.size(), idx.size() * n_instances_) << "kernel_rows memory is too small";
+    /// @todo fix: on CPU target, you may handle csr_csr, dns_dns API
 #if defined(USE_CUDA) || defined(USE_ONEAPI)
     get_dot_product_dns_csr(idx, kernel_rows);
 #else
@@ -145,11 +146,7 @@ const SyncArray<kernel_type> &KernelMatrix::diag() const {
 void
 KernelMatrix::dns_csr_mul(const SyncArray<kernel_type> &dense_mat, int n_rows, SyncArray<kernel_type> &result) const {
     CHECK_EQ(dense_mat.size(), n_rows * n_features_) << "dense matrix features doesn't match";
-#ifdef USE_ONEAPI
-    svm_kernel::dns_csr_mul(q_, n_instances_, n_rows, n_features_, dense_mat, val_, row_ptr_, col_ind_, nnz_, result);
-#else
     svm_kernel::dns_csr_mul(n_instances_, n_rows, n_features_, dense_mat, val_, row_ptr_, col_ind_, nnz_, result);
-#endif
 }
 
 #if !defined(USE_CUDA) && !defined(USE_ONEAPI)

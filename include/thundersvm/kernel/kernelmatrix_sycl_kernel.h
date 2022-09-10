@@ -37,7 +37,7 @@ namespace svm_kernel {
                            const SyncArray<kernel_type> &k_mat,
                            SyncArray<float_type> &dec_values, int n_classes, int n_instances);
 
-    void dns_csr_mul(const cl::sycl::queue& q, int m, int n, int k, const SyncArray<kernel_type> &dense_mat, const SyncArray<kernel_type> &csr_val,
+    void dns_csr_mul(int m, int n, int k, const SyncArray<kernel_type> &dense_mat, const SyncArray<kernel_type> &csr_val,
                      const SyncArray<int> &csr_row_ptr, const SyncArray<int> &csr_col_ind, int nnz,
                      SyncArray<kernel_type> &result);
 

@@ -11,18 +11,17 @@
 #include <thundersvm/config.h>
 #include "math.h"
 #include "util/common.h"
-#ifdef USE_ONEAPI
-#include <CL/sycl.hpp>
-#endif
+
 using std::string;
 using std::vector;
 typedef double float_type;
 
-#define USE_ONEAPI
 
 #ifdef USE_DOUBLE
 typedef double kernel_type;
 #else
 typedef float kernel_type;
 #endif
+
+
 #endif //THUNDERSVM_THUNDERSVM_H
