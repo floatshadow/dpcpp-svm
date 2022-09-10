@@ -4,14 +4,16 @@
 
 #ifndef THUNDERSVM_THUNDERSVM_H
 #define THUNDERSVM_THUNDERSVM_H
+#include <cstdlib>
+#include "util/log.h"
+#include <string>
+#include <vector>
+#include <thundersvm/config.h>
 #include "math.h"
 #include "util/common.h"
-#include "util/log.h"
+#ifdef USE_ONEAPI
 #include <CL/sycl.hpp>
-#include <cstdlib>
-#include <string>
-#include <thundersvm/config.h>
-#include <vector>
+#endif
 using std::string;
 using std::vector;
 typedef double float_type;

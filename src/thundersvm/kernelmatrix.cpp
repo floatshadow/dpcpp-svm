@@ -3,7 +3,12 @@
 //
 #include <thundersvm/svmparam.h>
 #include "thundersvm/kernelmatrix.h"
+#ifdef USE_ONEAPI
+#include "oneapi/mkl.hpp"
+#include "thundersvm/kernel/kernelmatrix_sycl_kernel.h"
+#else
 #include "thundersvm/kernel/kernelmatrix_kernel.h"
+#endif
 
 using namespace svm_kernel;
 KernelMatrix::KernelMatrix(const DataSet::node2d &instances, SvmParam param) {
@@ -73,7 +78,7 @@ KernelMatrix::KernelMatrix(const DataSet::node2d &instances, SvmParam param) {
 void KernelMatrix::get_rows(const SyncArray<int> &idx,
                             SyncArray<kernel_type> &kernel_rows) const {//compute multiple rows of kernel matrix according to idx
     CHECK_GE(kernel_rows.size(), idx.size() * n_instances_) << "kernel_rows memory is too small";
-#ifdef USE_CUDA
+#if defined(USE_CUDA) || defined(USE_ONEAPI)
     get_dot_product_dns_csr(idx, kernel_rows);
 #else
 	if(n_features_ < 1000000)
@@ -140,9 +145,14 @@ const SyncArray<kernel_type> &KernelMatrix::diag() const {
 void
 KernelMatrix::dns_csr_mul(const SyncArray<kernel_type> &dense_mat, int n_rows, SyncArray<kernel_type> &result) const {
     CHECK_EQ(dense_mat.size(), n_rows * n_features_) << "dense matrix features doesn't match";
+#ifdef USE_ONEAPI
+    svm_kernel::dns_csr_mul(q_, n_instances_, n_rows, n_features_, dense_mat, val_, row_ptr_, col_ind_, nnz_, result);
+#else
     svm_kernel::dns_csr_mul(n_instances_, n_rows, n_features_, dense_mat, val_, row_ptr_, col_ind_, nnz_, result);
+#endif
 }
-#ifndef USE_CUDA
+
+#if !defined(USE_CUDA) && !defined(USE_ONEAPI)
 void
 KernelMatrix::csr_csr_mul(const SyncArray<kernel_type> &ws_val, int n_rows, const SyncArray<int> &ws_col_ind,
                           const SyncArray<int> &ws_row_ptr, SyncArray<kernel_type> &result) const {
@@ -186,7 +196,8 @@ void KernelMatrix::get_dot_product(const DataSet::node2d &instances, SyncArray<k
     }
     dns_csr_mul(dense_ins, instances.size(), dot_product);
 }
-#ifndef USE_CUDA
+
+#if !defined(USE_CUDA) && !defined(USE_ONEAPI)
 void KernelMatrix::get_dot_product_csr_csr(const SyncArray<int> &idx, SyncArray<kernel_type> &dot_product) const {
     SyncArray<kernel_type> ws_val;
     SyncArray<int> ws_col_ind;

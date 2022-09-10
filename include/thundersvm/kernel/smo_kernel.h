@@ -11,10 +11,12 @@
 
 namespace svm_kernel {
     __host__ __device__ inline bool is_I_up(float_type a, float_type y, float_type Cp, float_type Cn) {
+        // check if corresponding x belongs to X_upper set.
         return (y > 0 && a < Cp) || (y < 0 && a > 0);
     }
 
     __host__ __device__ inline bool is_I_low(float_type a, float_type y, float_type Cp, float_type Cn) {
+        // check if corresponding x belongs to X_lower set.
         return (y > 0 && a > 0) || (y < 0 && a < Cn);
     }
 

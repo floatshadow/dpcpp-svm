@@ -70,7 +70,9 @@ CSMOSolver::solve(const KernelMatrix &k_mat, const SyncArray<int> &y, SyncArray<
         //select working set
         f_idx2sort.copy_from(f_idx);
         f_val2sort.copy_from(f_val);
+        // sorting according to the f_val in the ascending order.
         sort_f(f_val2sort, f_idx2sort);
+        // indicator function of working set.
         vector<int> ws_indicator(n_instances, 0);
         if (0 == iter) {
             select_working_set(ws_indicator, f_idx2sort, y, alpha, Cp, Cn, working_set);
@@ -141,6 +143,7 @@ void
 CSMOSolver::select_working_set(vector<int> &ws_indicator, const SyncArray<int> &f_idx2sort, const SyncArray<int> &y,
                                const SyncArray<float_type> &alpha, float_type Cp, float_type Cn,
                                SyncArray<int> &working_set) const {
+    /// select working set and set the indicator ws_indicator and the \p host data of working_set.
     int n_instances = ws_indicator.size();
     int p_left = 0;
     int p_right = n_instances - 1;

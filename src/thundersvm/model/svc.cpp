@@ -44,12 +44,12 @@ void SVC::train(const DataSet &dataset, SvmParam param) {
     model_setup(dataset_, param);
 
     vector<SyncArray<float_type>> alpha(n_binary_models);
-    vector<bool> is_sv(dataset_.n_instances(), false);
+    vector<bool> is_sv(dataset_.n_instances(), false); // sv: supporting vector
 
     int k = 0;
     for (int i = 0; i < n_classes; ++i) {
         for (int j = i + 1; j < n_classes; ++j) {
-            train_binary(dataset_, i, j, alpha[k], rho.host_data()[k]);
+            train_binary(dataset_, i, j, alpha[k], rho.host_data()[k]); // train binary classes
             vector<int> original_index = dataset_.original_index(i, j);
             CHECK_EQ(original_index.size(), alpha[k].size());
             const float_type *alpha_data = alpha[k].host_data();
@@ -147,10 +147,15 @@ void SVC::train(const DataSet &dataset, SvmParam param) {
 void SVC::train_binary(const DataSet &dataset, int i, int j, SyncArray<float_type> &alpha, float_type &rho) {
     DataSet::node2d ins = dataset.instances(i, j);//get instances of class i and j
     SyncArray<int> y(ins.size());
+    // Lagrange multipilers
     alpha.resize(ins.size());
+    // In dual optimization problem, w = \sum_{i=1}^{n}{y_i\alpha_i x_i},
+    // Indicator function has the similar meaning with Error Cache (for speedup),
+    // Here f_i = \sum_{j=1}^{n}{y_j\alpha_j K(x_i, x_j)}-y_i
     SyncArray<float_type> f_val(ins.size());
+    // initialize Lagrange multipliers to 0
     alpha.mem_set(0);
-    int *y_data = y.host_data();
+    int *y_data = y.host_data(); 
     float_type *f_val_data = f_val.host_data();
     for (int l = 0; l < dataset.count()[i]; ++l) {
         y_data[l] = +1;
@@ -160,7 +165,10 @@ void SVC::train_binary(const DataSet &dataset, int i, int j, SyncArray<float_typ
         y_data[dataset.count()[i] + l] = -1;
         f_val_data[dataset.count()[i] + l] = +1;
     }
+    // matrix formed by kernel value: Q_{ij} = y_i y_j K(x_i, x_j)
     KernelMatrix k_mat(ins, param);
+    /// @attention ThunderSVM uses a larger working set (2 in original paper),
+    /// it select \p q violating instance.
     int ws_size = get_working_set_size(ins.size(), k_mat.n_features());
     CSMOSolver solver;
     solver.solve(k_mat, y, alpha, rho, f_val, param.epsilon, param.C * c_weight[i], param.C * c_weight[j], ws_size,
