@@ -11,6 +11,9 @@
 #include <thundersvm/config.h>
 #include "math.h"
 #include "util/common.h"
+#ifdef USE_ONEAPI
+#include <CL/sycl.hpp>
+#endif
 using std::string;
 using std::vector;
 typedef double float_type;

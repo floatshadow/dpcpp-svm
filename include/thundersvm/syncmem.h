@@ -90,8 +90,8 @@ namespace thunder {
     private:
         void *device_ptr;
         void *host_ptr;
-        bool own_device_data;
-        bool own_host_data;
+        bool own_device_data; // ownership
+        bool own_host_data; // ownership
         size_t size_;
         HEAD head_;
         static size_t total_memory_size;

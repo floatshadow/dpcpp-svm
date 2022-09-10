@@ -16,8 +16,8 @@ public:
     struct node{
         node(int index, kernel_type value) : index(index), value(value) {}
 
-        int index;
-        kernel_type value;
+        int index; // feature index
+        kernel_type value; // feature value
     };
 
     typedef vector<vector<DataSet::node>> node2d;
@@ -59,7 +59,7 @@ public:
     ///the start position of instances for each class
     const vector<int> &start() const;
 
-    ///mapping logical label (0,1,2,3,...) to real label (maybe 2,4,5,6,...)
+    ///mapping logical class label (0,1,2,3,...) to real class label (maybe 2,4,5,6,...)
     const vector<int> &label() const;
 
     ///label for each instances, the instances are arranged as they are in file
@@ -82,14 +82,14 @@ public:
 
 	const bool is_zero_based() const;
 private:
-    vector<float_type> y_;
-    node2d instances_;
-    size_t total_count_;
-    size_t n_features_;
+    vector<float_type> y_; // labels
+    node2d instances_; // input data
+    size_t total_count_; // number of instances
+    size_t n_features_; // max feature index
     vector<int> start_; //logical start position of each class
     vector<int> count_; //the number of instances of each class
     vector<int> label_;
     vector<int> perm_;
-	bool zero_based = 0; //is zero_based format dataset?
+	bool zero_based = 0; // is zero_based format dataset? (feature index start from 0)
 };
 #endif //THUNDERSVM_DATASET_H
