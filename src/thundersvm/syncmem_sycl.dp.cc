@@ -1,4 +1,5 @@
-#include <thundersvm/syncmem_sycl.h>
+#include <thundersvm/syncmem.h>
+#include <thundersvm/util/sycl_common.h>
 
 namespace thunder
 {
@@ -9,15 +10,9 @@ SyncMem::SyncMem()
 {
 }
 
-SyncMem::SyncMem(sycl::queue q)
-    : device_ptr(nullptr), host_ptr(nullptr), size_(0), head_(UNINITIALIZED), own_device_data(false),
-      own_host_data(false), q(q)
-{
-}
-
-SyncMem::SyncMem(sycl::queue q, size_t size)
+SyncMem::SyncMem(size_t size)
     : device_ptr(nullptr), host_ptr(nullptr), size_(size), head_(UNINITIALIZED), own_device_data(false),
-      own_host_data(false), q(q)
+      own_host_data(false)
 {
 }
 
@@ -30,12 +25,12 @@ SyncMem::~SyncMem()
             total_memory_size -= size_;
         if (host_ptr && own_host_data)
         {
-            free_host(q, host_ptr);
+            free_host(thunder::, host_ptr);
             host_ptr = nullptr;
         }
         if (device_ptr && own_device_data)
         {
-            sycl::free(device_ptr, q);
+            sycl::free(device_ptr, thunder::get_sycl_queue());
             device_ptr = nullptr;
         }
     }
@@ -68,7 +63,7 @@ void SyncMem::to_host()
     switch (head_)
     {
     case UNINITIALIZED:
-        malloc_host(q, &host_ptr, size_);
+        malloc_host(thunder::get_sycl_queue(), &host_ptr, size_);
         memset(host_ptr, 0, size_);
         head_ = HOST;
         own_host_data = true;
@@ -77,11 +72,11 @@ void SyncMem::to_host()
     case DEVICE:
         if (nullptr == host_ptr)
         {
-            host_ptr = sycl::malloc_host(size_, q);
-            q.memset(host_ptr, 0, size_);
+            host_ptr = sycl::malloc_host(size_, thunder::get_sycl_queue());
+            thunder::get_sycl_queue().memset(host_ptr, 0, size_);
             own_host_data = true;
         }
-        q.memcpy(host_ptr, device_ptr, size_);
+        thunder::get_sycl_queue().memcpy(host_ptr, device_ptr, size_);
         head_ = HOST;
         break;
     case HOST:;
@@ -93,8 +88,8 @@ void SyncMem::to_device()
     switch (head_)
     {
     case UNINITIALIZED:
-        device_ptr = sycl::malloc_device(size_, q);
-        q.memset(device_ptr, 0, size_);
+        device_ptr = sycl::malloc_device(size_, thunder::get_sycl_queue());
+        thunder::get_sycl_queue().memset(device_ptr, 0, size_);
         head_ = DEVICE;
         own_device_data = true;
         total_memory_size += size_;
@@ -102,11 +97,11 @@ void SyncMem::to_device()
     case HOST:
         if (nullptr == device_ptr)
         {
-            device_ptr = sycl::malloc_device(size_, q);
-            q.memset(device_ptr, 0, size_);
+            device_ptr = sycl::malloc_device(size_, thunder::get_sycl_queue());
+            thunder::get_sycl_queue().memset(device_ptr, 0, size_);
             own_device_data = true;
         }
-        q.memcpy(device_ptr, host_ptr, size_);
+        thunder::get_sycl_queue().memcpy(device_ptr, host_ptr, size_);
         head_ = DEVICE;
         break;
     case DEVICE:;
@@ -118,7 +113,7 @@ void SyncMem::set_host_data(void *data)
     CHECK_NOTNULL(data);
     if (own_host_data)
     {
-        free_host(q, host_ptr);
+        free_host(thunder::get_sycl_queue(), host_ptr);
         total_memory_size -= size_;
     }
     host_ptr = data;
@@ -131,7 +126,7 @@ void SyncMem::set_device_data(void *data)
     CHECK_NOTNULL(data);
     if (own_device_data)
     {
-        sycl::free(device_data(), q);
+        sycl::free(device_data(), thunder::get_sycl_queue());
         total_memory_size -= size_;
     }
     device_ptr = data;
