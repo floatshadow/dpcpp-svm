@@ -4,11 +4,7 @@
 
 #include <thundersvm/kernel/smo_kernel.h>
 #include <thundersvm/model/svmmodel.h>
-#ifdef USE_ONEAPI
-#include <thundersvm/kernel/kernelmatrix_sycl_kernel.h>
-#else
 #include <thundersvm/kernel/kernelmatrix_kernel.h>
-#endif
 #include <iomanip>
 
 using std::ofstream;
