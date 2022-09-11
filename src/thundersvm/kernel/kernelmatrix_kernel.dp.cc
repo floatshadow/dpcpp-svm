@@ -1,9 +1,10 @@
 #include "thundersvm/thundersvm.h"
-#include <thundersvm/kernel/kernelmatrix_sycl_kernel.h>
+#include <thundersvm/kernel/kernelmatrix_kernel.h>
 #include <thundersvm/util/sycl_common.h>
 #include <oneapi/mkl.hpp>
+#include <oneapi/dpl/cmath>
 using namespace oneapi::mkl;
-
+using namespace sycl;
 
 namespace svm_kernel {
     void
@@ -62,17 +63,32 @@ namespace svm_kernel {
     RBF_kernel(const SyncArray<kernel_type> &self_dot0, const SyncArray<kernel_type> &self_dot1,
                SyncArray<kernel_type> &dot_product, int m,
                int n, kernel_type gamma) {
-        kernel_type *dot_product_data = dot_product.host_data();
-        const kernel_type *self_dot0_data = self_dot0.host_data();
-        const kernel_type *self_dot1_data = self_dot1.host_data();
-#pragma omp parallel for schedule(guided)
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; ++j) {
-                dot_product_data[i * n + j] = expf(
+        auto &q = thunder::get_sycl_queue();
+        const kernel_type *self_dot0_data = self_dot0.device_data();
+        const kernel_type *self_dot1_data = self_dot1.device_data();
+        kernel_type *dot_product_data = dot_product.device_data();
+
+        constexpr size_t ALIGN1 = 8;
+        constexpr size_t ALIGN2 = 8;
+        // n tend to larger than m.
+        size_t round_m = (m + ALIGN1 - 1) & ~(ALIGN1 - 1);
+        size_t round_n = (n + ALIGN2 - 1) & ~(ALIGN2 - 1);
+        q.submit([&](handler &h) {
+            constexpr size_t sub_group_size = 8;
+            h.parallel_for(
+                nd_range<2>(range<2>(round_m, round_n), range<2>(ALIGN1, ALIGN2)),
+                [=](nd_item<2> item)[[intel::reqd_sub_group_size(sub_group_size)]]
+                {
+                    int i = item.get_global_id()[0];
+                    int j = item.get_global_id()[1];
+                    if (i >= m || j >= n) return;
+                    dot_product_data[i * n + j] = expf(
                         -(self_dot0_data[i] + self_dot1_data[j] - dot_product_data[i * n + j] * 2) * gamma);
-            }
-        }
+                }
+            );
+        });
     }
+    
 
     void
     RBF_kernel(const SyncArray<int> &self_dot0_idx, const SyncArray<kernel_type> &self_dot1,
@@ -146,9 +162,7 @@ namespace svm_kernel {
         }
     }
 
-#ifdef USE_ONEAPI
-    oneapi::mkl::sparse::matrix_handle_t handle;
-#endif
+    sparse::matrix_handle_t handle;
 
     void dns_csr_mul(int m, int n, int k, const SyncArray<kernel_type> &dense_mat, const SyncArray<kernel_type> &csr_val,
                      const SyncArray<int> &csr_row_ptr, const SyncArray<int> &csr_col_ind, int nnz,

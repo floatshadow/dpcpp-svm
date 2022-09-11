@@ -3,12 +3,7 @@
 //
 #include <thundersvm/svmparam.h>
 #include "thundersvm/kernelmatrix.h"
-#ifdef USE_ONEAPI
-#include "oneapi/mkl.hpp"
-#include "thundersvm/kernel/kernelmatrix_sycl_kernel.h"
-#else
 #include "thundersvm/kernel/kernelmatrix_kernel.h"
-#endif
 
 using namespace svm_kernel;
 KernelMatrix::KernelMatrix(const DataSet::node2d &instances, SvmParam param) {

@@ -1,6 +1,11 @@
 #ifndef THUNDERSVM_SYCL_COMMON_H
 #define THUNDERSVM_SYCL_COMMON_H
 
+/// \file sycl_common.h
+/// \brief sycl global settings, not in common.h 
+/// in case of the pollution thus reduce the compilation time
+
+#include <cstddef>
 #include <thundersvm/config.h>
 
 #ifdef USE_ONEAPI
