@@ -168,7 +168,6 @@ namespace svm_kernel {
                      const SyncArray<int> &csr_row_ptr, const SyncArray<int> &csr_col_ind, int nnz,
                      SyncArray<kernel_type> &result) {
         sparse::init_matrix_handle(&handle);
-        sparse::set_matrix_property(handle, sparse::property::sorted);
         kernel_type one(1.0);
         kernel_type zero(0.0);
         auto &q = thunder::get_sycl_queue();
@@ -176,6 +175,7 @@ namespace svm_kernel {
                             const_cast<int *>(csr_row_ptr.device_data()), 
                             const_cast<int *>(csr_col_ind.device_data()), 
                             const_cast<kernel_type *>(csr_val.device_data()));
+        sparse::set_matrix_property(handle, sparse::property::sorted);
         auto gemm_event = sparse::gemm(q, layout::col_major, transpose::nontrans, transpose::trans,
                                              one, handle, const_cast<kernel_type *>(dense_mat.device_data()), k, n,
                                              zero, const_cast<kernel_type *>(result.device_data()), m,

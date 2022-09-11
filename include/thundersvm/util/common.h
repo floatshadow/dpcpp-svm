@@ -54,5 +54,5 @@ const int NUM_BLOCKS = 32 * 56;
 #endif
 
 #define NO_GPU \
-LOG(FATAL)<<"Cannot use GPU when compiling without GPU"
+LOG(WARNING) << "Cannot use GPU when compiling without GPU"
 #endif //THUNDERSVM_COMMON_H
