@@ -2,3 +2,4 @@
 #cmakedefine USE_CUDA
 #cmakedefine USE_DOUBLE
 #cmakedefine USE_ONEAPI
+#cmakedefine USE_GPU

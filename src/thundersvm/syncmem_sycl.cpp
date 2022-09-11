@@ -1,3 +1,4 @@
+#include "thundersvm/util/common.h"
 #include <thundersvm/syncmem.h>
 #include <thundersvm/util/sycl_common.h>
 
@@ -60,10 +61,11 @@ SyncMem::HEAD SyncMem::head() const
 
 void SyncMem::to_host()
 {
+#ifdef USE_GPU
     switch (head_)
     {
     case UNINITIALIZED:
-        malloc_host(thunder::get_sycl_queue(), &host_ptr, size_);
+        host_ptr = malloc_host(size_, thunder::get_sycl_queue());
         memset(host_ptr, 0, size_);
         head_ = HOST;
         own_host_data = true;
@@ -81,10 +83,24 @@ void SyncMem::to_host()
         break;
     case HOST:;
     }
+#else
+    switch (head_) {
+    case UNINITIALIZED:
+        auto &q = thunder::get_sycl_queue();
+        host_ptr = malloc_host(size_, q);
+        q.memset(host_ptr, 0, size_);
+        head_ = HOST;
+        own_host_data = true;
+        total_memory_size += size_;
+    case DEVICE:;
+    case HOST:;
+    }
+#endif
 }
 
 void SyncMem::to_device()
 {
+#ifdef USE_GPU
     switch (head_)
     {
     case UNINITIALIZED:
@@ -106,6 +122,22 @@ void SyncMem::to_device()
         break;
     case DEVICE:;
     }
+#else
+    switch (head_) {
+    case UNINITIALIZED:
+        auto &q = thunder::get_sycl_queue();
+        host_ptr = device_ptr = sycl::malloc_host(size_, q);
+        q.memset(device_ptr, 0, size_);
+        head_ = HOST; 
+        /// @attention Here "device" is CPU
+        own_host_data = true;
+        own_device_data = false;
+        total_memory_size += size_;
+        break;
+    case HOST: ;
+    case DEVICE: ;
+    }
+#endif
 }
 
 void SyncMem::set_host_data(void *data)

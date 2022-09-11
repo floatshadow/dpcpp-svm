@@ -11,7 +11,8 @@ endif()
 
 option(BUILD_SHARED_LIBS "Build as a shared library" ON)
 option(USE_CUDA "Compile with CUDA" ON)
-option(USE_ONEAPI "Compile With Intel oneAPI" ON)
+option(USE_ONEAPI "Compile with Intel oneAPI" ON)
+option(USE_GPU "Compile with NVIDIA/INTEL GPU support" OFF)
 option(BUILD_TESTS "Build Tests" OFF)
 option(USE_DOUBLE "Use double as kernel_type" OFF)
 
