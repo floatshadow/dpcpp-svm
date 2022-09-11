@@ -1,4 +1,4 @@
-#include "thundersvm/util/common.h"
+// #include "thundersvm/util/common.h"   This file has already been included in thundersvm.h?
 #include <thundersvm/syncmem.h>
 #include <thundersvm/util/sycl_common.h>
 
@@ -26,7 +26,7 @@ SyncMem::~SyncMem()
             total_memory_size -= size_;
         if (host_ptr && own_host_data)
         {
-            free_host(thunder::, host_ptr);
+            free_host(host_ptr);
             host_ptr = nullptr;
         }
         if (device_ptr && own_device_data)
@@ -84,14 +84,16 @@ void SyncMem::to_host()
     case HOST:;
     }
 #else
-    switch (head_) {
-    case UNINITIALIZED:
+    switch (head_)
+    {
+    case UNINITIALIZED: {
         auto &q = thunder::get_sycl_queue();
         host_ptr = malloc_host(size_, q);
         q.memset(host_ptr, 0, size_);
         head_ = HOST;
         own_host_data = true;
         total_memory_size += size_;
+    }
     case DEVICE:;
     case HOST:;
     }
@@ -123,19 +125,21 @@ void SyncMem::to_device()
     case DEVICE:;
     }
 #else
-    switch (head_) {
-    case UNINITIALIZED:
+    switch (head_)
+    {
+    case UNINITIALIZED: {
         auto &q = thunder::get_sycl_queue();
         host_ptr = device_ptr = sycl::malloc_host(size_, q);
         q.memset(device_ptr, 0, size_);
-        head_ = HOST; 
+        head_ = HOST;
         /// @attention Here "device" is CPU
         own_host_data = true;
         own_device_data = false;
         total_memory_size += size_;
         break;
-    case HOST: ;
-    case DEVICE: ;
+    }
+    case HOST:;
+    case DEVICE:;
     }
 #endif
 }
@@ -145,7 +149,7 @@ void SyncMem::set_host_data(void *data)
     CHECK_NOTNULL(data);
     if (own_host_data)
     {
-        free_host(thunder::get_sycl_queue(), host_ptr);
+        free_host(host_ptr);
         total_memory_size -= size_;
     }
     host_ptr = data;
@@ -164,6 +168,5 @@ void SyncMem::set_device_data(void *data)
     device_ptr = data;
     own_device_data = false;
     head_ = HEAD::DEVICE;
-
 }
 } // namespace thunder
