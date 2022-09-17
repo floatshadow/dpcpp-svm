@@ -1,4 +1,4 @@
-#include "thundersvm/util/common.h"
+// #include "thundersvm/util/common.h"   This file has already been included in thundersvm.h?
 #include <thundersvm/syncmem.h>
 #include <thundersvm/util/sycl_common.h>
 
@@ -26,7 +26,7 @@ SyncMem::~SyncMem()
             total_memory_size -= size_;
         if (host_ptr && own_host_data)
         {
-            free_host(thunder::, host_ptr);
+            free_host(host_ptr);
             host_ptr = nullptr;
         }
         if (device_ptr && own_device_data)
@@ -78,7 +78,7 @@ void SyncMem::to_host()
             thunder::get_sycl_queue().memset(host_ptr, 0, size_);
             own_host_data = true;
         }
-        thunder::get_sycl_queue().memcpy(host_ptr, device_ptr, size_);
+        thunder::get_sycl_queue().memcpy(host_ptr, device_ptr, size_).wait();
         head_ = HOST;
         break;
     case HOST:;
@@ -86,12 +86,12 @@ void SyncMem::to_host()
 #else
     switch (head_) {
     case UNINITIALIZED:
-        auto &q = thunder::get_sycl_queue();
+{        auto &q = thunder::get_sycl_queue();
         host_ptr = malloc_host(size_, q);
         q.memset(host_ptr, 0, size_);
         head_ = HOST;
         own_host_data = true;
-        total_memory_size += size_;
+        total_memory_size += size_;}
     case DEVICE:;
     case HOST:;
     }
@@ -117,7 +117,7 @@ void SyncMem::to_device()
             thunder::get_sycl_queue().memset(device_ptr, 0, size_);
             own_device_data = true;
         }
-        thunder::get_sycl_queue().memcpy(device_ptr, host_ptr, size_);
+        thunder::get_sycl_queue().memcpy(device_ptr, host_ptr, size_).wait();
         head_ = DEVICE;
         break;
     case DEVICE:;
@@ -125,7 +125,7 @@ void SyncMem::to_device()
 #else
     switch (head_) {
     case UNINITIALIZED:
-        auto &q = thunder::get_sycl_queue();
+{        auto &q = thunder::get_sycl_queue();
         host_ptr = device_ptr = sycl::malloc_host(size_, q);
         q.memset(device_ptr, 0, size_);
         head_ = HOST; 
@@ -133,7 +133,7 @@ void SyncMem::to_device()
         own_host_data = true;
         own_device_data = false;
         total_memory_size += size_;
-        break;
+        break;}
     case HOST: ;
     case DEVICE: ;
     }
@@ -145,7 +145,7 @@ void SyncMem::set_host_data(void *data)
     CHECK_NOTNULL(data);
     if (own_host_data)
     {
-        free_host(thunder::get_sycl_queue(), host_ptr);
+        free_host(host_ptr);
         total_memory_size -= size_;
     }
     host_ptr = data;

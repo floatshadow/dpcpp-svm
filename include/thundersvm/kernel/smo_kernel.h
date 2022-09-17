@@ -24,6 +24,7 @@ namespace svm_kernel {
         return a > 0 && (y > 0 ? a < Cp : a < Cn);
     }
 
+#ifdef USE_ONEAPI
     void
     c_smo_solve(const SyncArray<int> &y, SyncArray<float_type> &f_val, SyncArray<float_type> &alpha,
                 SyncArray<float_type> &alpha_diff,
@@ -44,6 +45,28 @@ namespace svm_kernel {
              int n_instances);
 
     void sort_f(SyncArray<float_type> &f_val2sort, SyncArray<int> &f_idx2sort);
+#else
+    void
+    c_smo_solve(const SyncArray<int> &y, SyncArray<float_type> &f_val, SyncArray<float_type> &alpha,
+                SyncArray<float_type> &alpha_diff,
+                const SyncArray<int> &working_set, float_type Cp, float_type Cn,
+                const SyncArray<kernel_type> &k_mat_rows,
+                const SyncArray<kernel_type> &k_mat_diag, int row_len, float_type eps, SyncArray<float_type> &diff,
+                int max_iter);
+
+    void
+    nu_smo_solve(const SyncArray<int> &y, SyncArray<float_type> &f_val, SyncArray<float_type> &alpha,
+                 SyncArray<float_type> &alpha_diff,
+                 const SyncArray<int> &working_set, float_type C, const SyncArray<kernel_type> &k_mat_rows,
+                 const SyncArray<kernel_type> &k_mat_diag, int row_len, float_type eps, SyncArray<float_type> &diff,
+                 int max_iter);
+
+    void
+    update_f(SyncArray<float_type> &f, const SyncArray<float_type> &alpha_diff, const SyncArray<kernel_type> &k_mat_rows,
+             int n_instances);
+
+    void sort_f(SyncArray<float_type> &f_val2sort, SyncArray<int> &f_idx2sort);
+#endif
 }
 
 #endif //THUNDERSVM_SMO_KERNEL_H

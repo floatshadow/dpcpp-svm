@@ -5,7 +5,7 @@
 #include <thundersvm/util/sycl_common.h>
 
 template <typename T>
-SyncArray<T>::SyncArray(size_t count) : mem(new SyncMem(thunder::get_sycl_queue(), sizeof(T) * count)), size_(count)
+SyncArray<T>::SyncArray(size_t count) : mem(new SyncMem(sizeof(T) * count)), size_(count)
 {
 }
 
@@ -41,14 +41,14 @@ template <typename T> T *SyncArray<T>::device_data()
 template <typename T> void SyncArray<T>::resize(size_t count)
 {
     delete mem;
-    mem = new SyncMem(thunder::get_sycl_queue(), sizeof(T) * count);
+    mem = new SyncMem(sizeof(T) * count);
     this->size_ = count;
 }
 
 template <typename T> 
 void SyncArray<T>::copy_from(const T *source, size_t count)
 {
-    thunder::device_mem_copy(thunder::get_sycl_queue(), mem->device_data(), source, sizeof(T) * count);
+    thunder::device_mem_copy(mem->device_data(), source, sizeof(T) * count);
 }
 
 template <typename T> 
@@ -67,7 +67,7 @@ void SyncArray<T>::log(el::base::type::ostream_t &ostream) const
 template <typename T> void SyncArray<T>::copy_from(const SyncArray<T> &source)
 {
     CHECK_EQ(size(), source.size()) << "destination and source count doesn't match";
-    copy_from(thunder::get_sycl_queue(), source.device_data(), source.size());
+    copy_from(source.device_data(), source.size());
 }
 
 template <typename T> void SyncArray<T>::mem_set(const T &value)

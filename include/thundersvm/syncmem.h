@@ -6,10 +6,13 @@
 #define THUNDERSVM_SYNCMEM_H
 
 #include <thundersvm/thundersvm.h>
+#include <thundersvm/util/sycl_common.h>
 
 namespace thunder {
     inline void malloc_host(void **ptr, size_t size) {
-#ifdef USE_CUDA
+#if defined USE_ONEAPI
+        *ptr = sycl::malloc_host(size, thunder::get_sycl_queue());
+#elif defined USE_CUDA
         CUDA_CHECK(cudaMallocHost(ptr, size));
 #else
         *ptr = malloc(size);
@@ -17,7 +20,9 @@ namespace thunder {
     }
 
     inline void free_host(void *ptr) {
-#ifdef USE_CUDA
+#if defined USE_ONEAPI
+        sycl::free(ptr, thunder::get_sycl_queue());
+#elif defined USE_CUDA
         CUDA_CHECK(cudaFreeHost(ptr));
 #else
         free(ptr);
@@ -25,7 +30,9 @@ namespace thunder {
     }
 
     inline void device_mem_copy(void *dst, const void *src, size_t size) {
-#ifdef USE_CUDA
+#if defined USE_ONEAPI
+        thunder::get_sycl_queue().memcpy(dst, src, size);
+#elif defined USE_CUDA
         CUDA_CHECK(cudaMemcpy(dst, src, size, cudaMemcpyDefault));
 #else
         NO_GPU;
