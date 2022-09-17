@@ -84,14 +84,26 @@ void SyncMem::to_host()
     case HOST:;
     }
 #else
+<<<<<<< HEAD
     switch (head_) {
     case UNINITIALIZED:
 {        auto &q = thunder::get_sycl_queue();
+=======
+    switch (head_)
+    {
+    case UNINITIALIZED: {
+        auto &q = thunder::get_sycl_queue();
+>>>>>>> ca169523484636985b76fa31cf2da47325296409
         host_ptr = malloc_host(size_, q);
         q.memset(host_ptr, 0, size_);
         head_ = HOST;
         own_host_data = true;
+<<<<<<< HEAD
         total_memory_size += size_;}
+=======
+        total_memory_size += size_;
+    }
+>>>>>>> ca169523484636985b76fa31cf2da47325296409
     case DEVICE:;
     case HOST:;
     }
@@ -123,19 +135,33 @@ void SyncMem::to_device()
     case DEVICE:;
     }
 #else
+<<<<<<< HEAD
     switch (head_) {
     case UNINITIALIZED:
 {        auto &q = thunder::get_sycl_queue();
+=======
+    switch (head_)
+    {
+    case UNINITIALIZED: {
+        auto &q = thunder::get_sycl_queue();
+>>>>>>> ca169523484636985b76fa31cf2da47325296409
         host_ptr = device_ptr = sycl::malloc_host(size_, q);
         q.memset(device_ptr, 0, size_);
-        head_ = HOST; 
+        head_ = HOST;
         /// @attention Here "device" is CPU
         own_host_data = true;
         own_device_data = false;
         total_memory_size += size_;
+<<<<<<< HEAD
         break;}
     case HOST: ;
     case DEVICE: ;
+=======
+        break;
+    }
+    case HOST:;
+    case DEVICE:;
+>>>>>>> ca169523484636985b76fa31cf2da47325296409
     }
 #endif
 }
@@ -164,6 +190,5 @@ void SyncMem::set_device_data(void *data)
     device_ptr = data;
     own_device_data = false;
     head_ = HEAD::DEVICE;
-
 }
 } // namespace thunder
