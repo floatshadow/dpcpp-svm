@@ -25,7 +25,11 @@ namespace thunder{
         }
         std::exit(2);
     };
+#ifdef USE_GPU
     inline sycl::default_selector selector;
+#else 
+    inline sycl::cpu_selector selector;
+#endif
     inline sycl::queue sycl_q(selector, exception_handler);
     inline sycl::queue &get_sycl_queue() { return sycl_q; }
 } // end namespace thunder

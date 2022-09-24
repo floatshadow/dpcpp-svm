@@ -21,11 +21,7 @@ CSMOSolver::solve(const KernelMatrix &k_mat, const SyncArray<int> &y, SyncArray<
     SyncArray<int> working_set(ws_size);
     SyncArray<int> working_set_first_half(q);
     SyncArray<int> working_set_last_half(q);
-#ifdef USE_CUDA
-    working_set_first_half.set_device_data(working_set.device_data());
-    working_set_last_half.set_device_data(&working_set.device_data()[q]);
-#endif
-#ifdef USE_ONEAPI
+#ifdef USE_GPU
     working_set_first_half.set_device_data(working_set.device_data());
     working_set_last_half.set_device_data(&working_set.device_data()[q]);
 #endif
@@ -41,10 +37,8 @@ CSMOSolver::solve(const KernelMatrix &k_mat, const SyncArray<int> &y, SyncArray<
     SyncArray<kernel_type> k_mat_rows(ws_size * k_mat.n_instances());
     SyncArray<kernel_type> k_mat_rows_first_half(q * k_mat.n_instances());
     SyncArray<kernel_type> k_mat_rows_last_half(q * k_mat.n_instances());
-#if defined USE_CUDA
-    k_mat_rows_first_half.set_device_data(k_mat_rows.device_data());
-    k_mat_rows_last_half.set_device_data(&k_mat_rows.device_data()[q * k_mat.n_instances()]);
-#elif defined USE_ONEAPI
+
+#if defined USE_GPU
     k_mat_rows_first_half.set_device_data(k_mat_rows.device_data());
     k_mat_rows_last_half.set_device_data(&k_mat_rows.device_data()[q * k_mat.n_instances()]);
 #else
@@ -55,7 +49,6 @@ CSMOSolver::solve(const KernelMatrix &k_mat, const SyncArray<int> &y, SyncArray<
     for (int i = 0; i < n_instances; ++i) {
         f_idx_data[i] = i;
     }
-    // LOG(DEBUG) << f_idx.host_data()[0] << " " << f_idx.host_data()[1] << " " << f_idx.host_data()[2];
     init_f(alpha, y, k_mat, f_val);
     LOG(INFO) << "training start";
     int max_iter = max(100000, ws_size > INT_MAX / 100 ? INT_MAX : 100 * ws_size);
@@ -76,52 +69,26 @@ CSMOSolver::solve(const KernelMatrix &k_mat, const SyncArray<int> &y, SyncArray<
     float_type obj;
     for (int iter = 0;; ++iter) {
         //select working set
-        // LOG(DEBUG) << "1";
         f_idx2sort.copy_from(f_idx);
         f_val2sort.copy_from(f_val);
         // sorting according to the f_val in the ascending order.
-        // LOG(DEBUG) << "2";
-
-        // LOG(DEBUG) << f_val2sort.host_data()[0] << " " << f_val2sort.host_data()[1] << " " << f_val2sort.host_data()[2] << " " << f_val2sort.host_data()[3] << " " << f_val2sort.host_data()[4] << " " << f_val2sort.host_data()[5];
-        // LOG(DEBUG) << f_idx2sort.host_data()[0] << " " << f_idx2sort.host_data()[1] << " " << f_idx2sort.host_data()[2];
         sort_f(f_val2sort, f_idx2sort);
-
-        // LOG(DEBUG) << "3";
 
         // indicator function of working set.
         vector<int> ws_indicator(n_instances, 0);
         if (0 == iter) {
-            // LOG(DEBUG) << "3.1";
-
             select_working_set(ws_indicator, f_idx2sort, y, alpha, Cp, Cn, working_set);
-            // LOG(DEBUG) << "3.1.1";
-
             k_mat.get_rows(working_set, k_mat_rows);
-            // LOG(DEBUG) << "3.1.2";
         } else {
-            // LOG(DEBUG) << "3.2";
-
             working_set_first_half.copy_from(working_set_last_half);
-            // LOG(DEBUG) << "3.2.1";
-
             int *working_set_data = working_set.host_data();
-            // LOG(DEBUG) << "3.2.2";
-
             for (int i = 0; i < q; ++i) {
                 ws_indicator[working_set_data[i]] = 1;
             }
-            // LOG(DEBUG) << "3.2.3";
-
             select_working_set(ws_indicator, f_idx2sort, y, alpha, Cp, Cn, working_set_last_half);
-            // LOG(DEBUG) << "3.2.4";
-
             k_mat_rows_first_half.copy_from(k_mat_rows_last_half);
-            // LOG(DEBUG) << "3.2.5";
-
             k_mat.get_rows(working_set_last_half, k_mat_rows_last_half);
-            // LOG(DEBUG) << "3.2.6";
         }
-        // LOG(DEBUG) << "4";
         //local smo
         smo_kernel(y, f_val, alpha, alpha_diff, working_set, Cp, Cn, k_mat_rows, k_mat.diag(), n_instances, eps, diff,
                    max_iter);

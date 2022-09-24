@@ -378,9 +378,8 @@ namespace svm_kernel
         the limit. To get the device limit, query
         info::device::max_work_group_size. Adjust the work-group size if needed.
         */
-        // LOG(DEBUG) << "4";
-        thunder::get_sycl_queue().submit([&](sycl::handler &cgh)
-                                         {
+        auto &q = thunder::get_sycl_queue();
+        q.submit([&](sycl::handler &cgh) {
                 sycl::accessor<uint8_t, 1, sycl::access_mode::read_write,
                                sycl::access::target::local>
                     dpct_local_acc_ct1(sycl::range<1>(smem_size), cgh);
@@ -408,7 +407,7 @@ namespace svm_kernel
                                 diff_device_data_ct12, max_iter, item_ct1,
                                 dpct_local_acc_ct1.get_pointer());
                     }); });
-        // LOG(DEBUG) << "5";
+        q.wait();
     }
 
     void nu_smo_solve(const SyncArray<int> &y, SyncArray<float_type> &f_val, SyncArray<float_type> &alpha,
@@ -428,8 +427,8 @@ namespace svm_kernel
         the limit. To get the device limit, query
         info::device::max_work_group_size. Adjust the work-group size if needed.
         */
-        thunder::get_sycl_queue().submit([&](sycl::handler &cgh)
-                                         {
+        auto &q = thunder::get_sycl_queue();
+        q.submit([&](sycl::handler &cgh) {
                 sycl::accessor<uint8_t, 1, sycl::access_mode::read_write,
                                sycl::access::target::local>
                     dpct_local_acc_ct1(sycl::range<1>(smem_size), cgh);
@@ -457,6 +456,7 @@ namespace svm_kernel
                                 diff_device_data_ct11, max_iter, item_ct1,
                                 dpct_local_acc_ct1.get_pointer());
                     }); });
+        q.wait();
     }
 
     void
@@ -484,24 +484,26 @@ namespace svm_kernel
                   const SyncArray<kernel_type> &k_mat_rows,
                   int n_instances)
     {
-        thunder::get_sycl_queue().submit([&](sycl::handler &cgh)
-                                         { 
-                                            auto f_device_data_ct0=f.device_data();
-                                            auto alpha_diff_size_ct1 = alpha_diff.size();
-                                            auto alpha_diff_device_data_ct2 = alpha_diff.device_data();
-                                            auto k_mat_rows_device_data_ct3 = k_mat_rows.device_data();
-                                            auto n_instances_ct4 = n_instances;
-                                            cgh.parallel_for(sycl::nd_range<3>(sycl::range<3>(1, 1, 1024), sycl::range<3>(1, 1, 1024)),
-                                                             [=](sycl::nd_item<3> item_ct1)
-                                                             {
-                                                                 update_f_kernel(f_device_data_ct0, alpha_diff_size_ct1, alpha_diff_device_data_ct2, k_mat_rows_device_data_ct3, n_instances_ct4, item_ct1);
-                                                             }); });
+        auto &q = thunder::get_sycl_queue();
+        q.submit([&](sycl::handler &cgh) { 
+            auto f_device_data_ct0 = f.device_data();
+            auto alpha_diff_size_ct1 = alpha_diff.size();
+            auto alpha_diff_device_data_ct2 = alpha_diff.device_data();
+            auto k_mat_rows_device_data_ct3 = k_mat_rows.device_data();
+            auto n_instances_ct4 = n_instances;
+            cgh.parallel_for(
+                sycl::nd_range<3>(sycl::range<3>(1, 1, 1024), sycl::range<3>(1, 1, 1024)),
+                [=](sycl::nd_item<3> item_ct1) {
+                    update_f_kernel(f_device_data_ct0, alpha_diff_size_ct1, alpha_diff_device_data_ct2, k_mat_rows_device_data_ct3, n_instances_ct4, item_ct1);
+                }); 
+            });
+        q.wait();
     }
 
     void sort_f(SyncArray<float_type> &f_val2sort, SyncArray<int> &f_idx2sort)
     {
-        dpct::sort(oneapi::dpl::execution::make_device_policy(thunder::get_sycl_queue()), f_val2sort.device_data(),
-                   f_val2sort.device_data() + f_val2sort.size(),
+        dpct::sort(oneapi::dpl::execution::make_device_policy(thunder::get_sycl_queue()),
+                   f_val2sort.device_data(), f_val2sort.device_data() + f_val2sort.size(),
                    f_idx2sort.device_data(), oneapi::dpl::less<float_type>());
     }
 }

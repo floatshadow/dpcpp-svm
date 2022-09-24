@@ -89,7 +89,7 @@ void SyncMem::to_host()
     {
     case UNINITIALIZED: {
         auto &q = thunder::get_sycl_queue();
-        host_ptr = malloc_host(size_, q);
+        host_ptr = sycl::malloc_host(size_, q);
         q.memset(host_ptr, 0, size_).wait();
         head_ = HOST;
         own_host_data = true;

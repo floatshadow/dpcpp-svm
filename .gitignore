@@ -1,3 +1,6 @@
+# CUDA Source Files
+*.cu
+
 # Build
 build/
 

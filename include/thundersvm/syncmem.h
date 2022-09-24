@@ -5,6 +5,8 @@
 #ifndef THUNDERSVM_SYNCMEM_H
 #define THUNDERSVM_SYNCMEM_H
 
+#include "thundersvm/util/log.h"
+#include <cstdlib>
 #include <thundersvm/thundersvm.h>
 #include <thundersvm/util/sycl_common.h>
 
@@ -30,6 +32,9 @@ namespace thunder {
     }
 
     inline void device_mem_copy(void *dst, const void *src, size_t size) {
+        CHECK_NE(dst, nullptr) << "memcpy dst is nullptr";
+        if (src == nullptr) std::abort();
+        CHECK_NE(src, nullptr) << "memcpy src is nullptr";
 #if defined USE_ONEAPI
         auto &q = thunder::get_sycl_queue();
         q.memcpy(dst, src, size).wait();

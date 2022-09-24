@@ -48,7 +48,11 @@ template <typename T> void SyncArray<T>::resize(size_t count)
 template <typename T> 
 void SyncArray<T>::copy_from(const T *source, size_t count)
 {
+#ifdef USE_GPU
     thunder::device_mem_copy(mem->device_data(), source, sizeof(T) * count);
+#else
+    thunder::device_mem_copy(mem->host_data(), source, sizeof(T) * count);
+#endif
 }
 
 template <typename T> 
@@ -67,12 +71,17 @@ void SyncArray<T>::log(el::base::type::ostream_t &ostream) const
 template <typename T> void SyncArray<T>::copy_from(const SyncArray<T> &source)
 {
     CHECK_EQ(size(), source.size()) << "destination and source count doesn't match";
+#ifdef USEGPU
     copy_from(source.device_data(), source.size());
+#else
+    copy_from(source.host_data(), source.size());
+#endif
 }
 
 template <typename T> void SyncArray<T>::mem_set(const T &value)
 {
-    thunder::get_sycl_queue().memset(device_data(), value, mem_size());
+    auto &q = thunder::get_sycl_queue();
+    q.memset(device_data(), value, mem_size());
 }
 
 template class SyncArray<int>;
