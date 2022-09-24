@@ -10,10 +10,23 @@
 
 #ifdef USE_ONEAPI
 #include <CL/sycl.hpp>
+#include <iostream>
 
 namespace thunder{
+    inline auto exception_handler = [](sycl::exception_list exceptions) {
+        for (std::exception_ptr const& e : exceptions) {
+            try {
+                std::rethrow_exception(e);
+            }
+            catch (sycl::exception const& e) {
+                std::cerr << "Caught asynchronous SYCL exception during GEMM:" << std::endl;
+                std::cerr << "\t" << e.what() << std::endl;
+            }
+        }
+        std::exit(2);
+    };
     inline sycl::default_selector selector;
-    inline sycl::queue sycl_q(selector);
+    inline sycl::queue sycl_q(selector, exception_handler);
     inline sycl::queue &get_sycl_queue() { return sycl_q; }
 } // end namespace thunder
 #endif

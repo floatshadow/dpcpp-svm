@@ -31,7 +31,8 @@ namespace thunder {
 
     inline void device_mem_copy(void *dst, const void *src, size_t size) {
 #if defined USE_ONEAPI
-        thunder::get_sycl_queue().memcpy(dst, src, size);
+        auto &q = thunder::get_sycl_queue();
+        q.memcpy(dst, src, size).wait();
 #elif defined USE_CUDA
         CUDA_CHECK(cudaMemcpy(dst, src, size, cudaMemcpyDefault));
 #else
