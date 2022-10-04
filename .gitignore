@@ -1,6 +1,8 @@
 # Build
 build/
 .cache/
+result.txt
+demo.model
 
 # Editor Settings
 .vscode/

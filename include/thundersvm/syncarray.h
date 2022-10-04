@@ -62,6 +62,14 @@ public:
 //    T &operator[](int index){
 //        return host_data()[index];
 //    }
+    
+    /**
+     * swap syncmem ownership.
+     * @param source source of
+     */
+    void swap(SyncArray<T> &source) {
+        mem->swap(source.mem);
+    }
 
     /**
      * copy device data. This will call to_device() implicitly.

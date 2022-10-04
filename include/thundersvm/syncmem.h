@@ -71,6 +71,9 @@ namespace thunder {
 
         ///transfer data to device
         void to_device();
+        
+        /// swap memory and ownership.
+        void swap(SyncMem *rhs);
 
         ///return the size of memory
         size_t size() const;

@@ -65,6 +65,8 @@ namespace svm_kernel {
         ws_row_ptr.copy_from(csr_row_ptr.data(), ws_row_ptr.size());
     }
 
+
+    /// @attention: Not be called in CPU only train.
     void
     RBF_kernel(const SyncArray<kernel_type> &self_dot0, const SyncArray<kernel_type> &self_dot1,
                SyncArray<kernel_type> &dot_product, int m,
@@ -81,6 +83,7 @@ namespace svm_kernel {
         }
     }
 
+    /// @attention: \p Is called in CPU only train.
     void
     RBF_kernel(const SyncArray<int> &self_dot0_idx, const SyncArray<kernel_type> &self_dot1,
                SyncArray<kernel_type> &dot_product, int m,
@@ -154,7 +157,7 @@ namespace svm_kernel {
     }
 
     sparse::matrix_handle_t handle;
-
+    /// @attention: Use device_data with modified syncarray.
     void dns_csr_mul(int m, int n, int k, const SyncArray<kernel_type> &dense_mat, const SyncArray<kernel_type> &csr_val,
                      const SyncArray<int> &csr_row_ptr, const SyncArray<int> &csr_col_ind, int nnz,
                      SyncArray<kernel_type> &result) {
@@ -176,19 +179,20 @@ namespace svm_kernel {
                             const_cast<int *>(csr_col_ind.host_data()), 
                             const_cast<kernel_type *>(csr_val.host_data()));
         sparse::set_matrix_property(handle, sparse::property::sorted);
+        /// @attention: weired trans.
         // AS MKL do not support dense matrix B `trans` we add a manual trans.
-        kernel_type *dense_mat_trans = (kernel_type *)malloc(sizeof(kernel_type) * dense_mat.size());
-        const kernel_type *dense_mat_data = dense_mat.host_data();
-        for (int j = 0; j < n; ++j)
-         for (int i = 0; i < k; ++i)
-             dense_mat_trans[j * k + i] = dense_mat_data[i * n + i];
+        // kernel_type *dense_mat_trans = (kernel_type *)malloc(sizeof(kernel_type) * dense_mat.size());
+        // const kernel_type *dense_mat_data = dense_mat.host_data();
+        // for (int j = 0; j < n; ++j)
+        //  for (int i = 0; i < k; ++i)
+        //      dense_mat_trans[j * k + i] = dense_mat_data[i * n + i];
         auto gemm_event = sparse::gemm(q, layout::col_major, transpose::nontrans, transpose::nontrans,
                                              one, handle, 
-                                             const_cast<kernel_type *>(dense_mat.host_data()), n, k,
+                                             const_cast<kernel_type *>(dense_mat.host_data()), n, k, // num_col, ldB
                                              zero, const_cast<kernel_type *>(result.host_data()), m,
                                              {});
         sparse::release_matrix_handle(&handle, {gemm_event});
-        free(dense_mat_trans);
+        // free(dense_mat_trans);
     }
 
     void csr_csr_mul(int m, int n, int k, const SyncArray<kernel_type> &ws_val, const SyncArray<int> &ws_col_ind,

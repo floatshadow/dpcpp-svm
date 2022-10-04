@@ -132,4 +132,13 @@ namespace thunder {
         NO_GPU;
 #endif
     }
+
+    void SyncMem::swap(SyncMem *rhs) {
+        std::swap(device_ptr, rhs->device_ptr);
+        std::swap(host_ptr, rhs->host_ptr);
+        std::swap(own_device_data, rhs->own_device_data);
+        std::swap(own_host_data, rhs->own_host_data);
+        std::swap(size_, rhs->size_);
+        std::swap(head_, rhs->head_);
+    }
 }

@@ -2,13 +2,18 @@
 //
 // Created by jiashuai on 17-11-7.
 //
-
+#include <oneapi/dpl/execution>
+#include <oneapi/dpl/algorithm>
+#include <CL/sycl.hpp>
+#include <dpct/dpct.hpp>
+#include <dpct/dpl_utils.hpp>
+#include <thundersvm/util/sycl_common.h>
 
 #include <thundersvm/kernel/smo_kernel.h>
 #include <omp.h>
 
 namespace svm_kernel {
-
+    
     void c_smo_solve_kernel(const int *label, float_type *f_val, float_type *alpha, float_type *alpha_diff,
                             const int *working_set,
                             int ws_size,
@@ -122,7 +127,7 @@ namespace svm_kernel {
         c_smo_solve_kernel(y.host_data(), f_val.host_data(), alpha.host_data(), alpha_diff.host_data(),
                            working_set.host_data(), working_set.size(), Cp, Cn, k_mat_rows.host_data(),
                            k_mat_diag.host_data(), row_len, eps, diff.host_data(), max_iter);
-    }
+    } 
 
     void nu_smo_solve_kernel(const int *y, float_type *f_val, float_type *alpha, float_type *alpha_diff,
                              const int *working_set, int ws_size, float_type C, const kernel_type *k_mat_rows,
@@ -318,17 +323,14 @@ namespace svm_kernel {
         }
     }
 
-    void sort_f(SyncArray<float_type> &f_val2sort, SyncArray<int> &f_idx2sort) {
-        vector<std::pair<float_type, int>> paris;
-        float_type *f_val2sort_data = f_val2sort.host_data();
-        int *f_idx2sort_data = f_idx2sort.host_data();
-        for (int i = 0; i < f_val2sort.size(); ++i) {
-            paris.emplace_back(f_val2sort_data[i], f_idx2sort_data[i]);
-        }
-        std::sort(paris.begin(), paris.end());
-        for (int i = 0; i < f_idx2sort.size(); ++i) {
-            f_idx2sort_data[i] = paris[i].second;
-        }
+    /// @attention Use device_data with modified syncarray.
+    void sort_f(SyncArray<float_type> &f_val2sort, SyncArray<int> &f_idx2sort)
+    {
+        auto &q = thunder::get_sycl_queue();
+        dpct::sort(oneapi::dpl::execution::make_device_policy(q),
+                   f_val2sort.host_data(), f_val2sort.host_data() + f_val2sort.size(),
+                   f_idx2sort.host_data(), oneapi::dpl::less<float_type>());
     }
+    
 }
 
