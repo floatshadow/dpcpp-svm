@@ -101,6 +101,7 @@ void KernelMatrix::get_rows(const SyncArray<int> &idx,
 
 void KernelMatrix::get_rows(const DataSet::node2d &instances,
                             SyncArray<kernel_type> &kernel_rows) const {//compute the whole (sub-) kernel matrix of the given instances.
+    LOG(INFO) << "Get Rows: Instances, Kernel Rows";
     CHECK_GE(kernel_rows.size(), instances.size() * n_instances_) << "kernel_rows memory is too small";
     get_dot_product(instances, kernel_rows);
 
@@ -142,6 +143,8 @@ KernelMatrix::dns_csr_mul(const SyncArray<kernel_type> &dense_mat, int n_rows, S
     CHECK_EQ(dense_mat.size(), n_rows * n_features_) << "dense matrix features doesn't match";
     svm_kernel::dns_csr_mul(n_instances_, n_rows, n_features_, dense_mat, val_, row_ptr_, col_ind_, nnz_, result);
 }
+
+
 #ifndef USE_CUDA
 void
 KernelMatrix::csr_csr_mul(const SyncArray<kernel_type> &ws_val, int n_rows, const SyncArray<int> &ws_col_ind,
@@ -165,6 +168,7 @@ void KernelMatrix::get_dot_product_dns_csr(const SyncArray<int> &idx, SyncArray<
 }
 
 void KernelMatrix::get_dot_product(const DataSet::node2d &instances, SyncArray<kernel_type> &dot_product) const {
+    LOG(INFO) << "Get Dot Product: Instances, Dot Prodcut";
     SyncArray<kernel_type> dense_ins(instances.size() * n_features_);
     dense_ins.mem_set(0);
     kernel_type *dense_ins_data = dense_ins.host_data();
@@ -186,6 +190,9 @@ void KernelMatrix::get_dot_product(const DataSet::node2d &instances, SyncArray<k
     }
     dns_csr_mul(dense_ins, instances.size(), dot_product);
 }
+
+
+
 #ifndef USE_CUDA
 void KernelMatrix::get_dot_product_csr_csr(const SyncArray<int> &idx, SyncArray<kernel_type> &dot_product) const {
     SyncArray<kernel_type> ws_val;

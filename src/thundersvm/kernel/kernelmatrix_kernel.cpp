@@ -2,9 +2,16 @@
 // Created by jiashuai on 17-11-7.
 //
 
+#include "thundersvm/thundersvm.h"
 #include <thundersvm/kernel/kernelmatrix_kernel.h>
 #include <Eigen/Dense>
 #include <Eigen/Sparse>
+#include <thundersvm/util/sycl_common.h>
+#include <oneapi/mkl.hpp>
+#include <oneapi/dpl/cmath>
+using namespace oneapi::mkl;
+using namespace sycl;
+
 namespace svm_kernel {
     void
     get_working_set_ins(const SyncArray<kernel_type> &val, const SyncArray<int> &col_ind, const SyncArray<int> &row_ptr,
@@ -146,17 +153,41 @@ namespace svm_kernel {
         }
     }
 
+    sparse::matrix_handle_t handle;
+
     void dns_csr_mul(int m, int n, int k, const SyncArray<kernel_type> &dense_mat, const SyncArray<kernel_type> &csr_val,
                      const SyncArray<int> &csr_row_ptr, const SyncArray<int> &csr_col_ind, int nnz,
                      SyncArray<kernel_type> &result) {
-        Eigen::Map<const Eigen::Matrix<kernel_type, Eigen::Dynamic, Eigen::Dynamic, Eigen::ColMajor>> denseMat(dense_mat.host_data(), k, n);
-        Eigen::Map<const Eigen::SparseMatrix<kernel_type, Eigen::RowMajor>> sparseMat(m, k, nnz, csr_row_ptr.host_data(),
-                                                                                csr_col_ind.host_data(),
-                                                                                csr_val.host_data());
-        Eigen::Matrix<kernel_type, Eigen::Dynamic, Eigen::Dynamic, Eigen::ColMajor> retMat = sparseMat * denseMat;
-        Eigen::Map<Eigen::Matrix<kernel_type, Eigen::Dynamic, Eigen::Dynamic, Eigen::ColMajor> >(result.host_data(),
-                                                                                           retMat.rows(),
-                                                                                           retMat.cols()) = retMat;
+        // Eigen::Map<const Eigen::Matrix<kernel_type, Eigen::Dynamic, Eigen::Dynamic, Eigen::ColMajor>> denseMat(dense_mat.host_data(), k, n);
+        // Eigen::Map<const Eigen::SparseMatrix<kernel_type, Eigen::RowMajor>> sparseMat(m, k, nnz, csr_row_ptr.host_data(),
+        //                                                                         csr_col_ind.host_data(),
+        //                                                                         csr_val.host_data());
+        // Eigen::Matrix<kernel_type, Eigen::Dynamic, Eigen::Dynamic, Eigen::ColMajor> retMat = sparseMat * denseMat;
+        // Eigen::Map<Eigen::Matrix<kernel_type, Eigen::Dynamic, Eigen::Dynamic, Eigen::ColMajor> >(result.host_data(),
+        //                                                                                    retMat.rows(),
+        //                                                                                    retMat.cols()) = retMat;
+        sparse::init_matrix_handle(&handle);
+        kernel_type one(1.0);
+        kernel_type zero(0.0);
+        auto &q = thunder::get_sycl_queue();
+        /// \brief Do Sparse Mat (m x k) @ trans(Dense Mat (n x k)) = Dense Mat (m x n), Column Major.
+        sparse::set_csr_data(handle, m, k, index_base::zero, 
+                            const_cast<int *>(csr_row_ptr.host_data()), 
+                            const_cast<int *>(csr_col_ind.host_data()), 
+                            const_cast<kernel_type *>(csr_val.host_data()));
+        sparse::set_matrix_property(handle, sparse::property::sorted);
+        // AS MKL do not support dense matrix B `trans` we add a manual trans.
+        // kernel_type *dense_mat_trans = (kernel_type *)malloc(sizeof(kernel_type) * dense_mat.size());
+        // for (int j = 0; i < n; ++j)
+        //  for (int i = 0; i < k; ++i)
+        //      dense_mat_trans[j * k + i] = dense_mat[i * n + i];
+        auto gemm_event = sparse::gemm(q, layout::col_major, transpose::nontrans, transpose::nontrans,
+                                             one, handle, 
+                                             const_cast<kernel_type *>(dense_mat.host_data()), n, k,
+                                             zero, const_cast<kernel_type *>(result.host_data()), m,
+                                             {});
+        sparse::release_matrix_handle(&handle, {gemm_event});
+        // free(dense_mat_trans);
     }
 
     void csr_csr_mul(int m, int n, int k, const SyncArray<kernel_type> &ws_val, const SyncArray<int> &ws_col_ind,
