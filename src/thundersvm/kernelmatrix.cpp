@@ -30,6 +30,12 @@ KernelMatrix::KernelMatrix(const DataSet::node2d &instances, SvmParam param) {
     }
     n_features_++;
 
+    nnz_ = csr_val.size();//number of nonzero
+    /// @attention: MKL CSR spec.
+    // CHECK_EQ(csr_row_ptr[n_instances_], nnz_) << " CHECK CSR";
+    // CHECK_EQ(csr_row_ptr.size(), n_instances_) << " CHECK CSR";
+    // csr_row_ptr.push_back(nnz_);
+
     //three arrays (on GPU/CPU) for csr representation
     val_.resize(csr_val.size());
     col_ind_.resize(csr_col_ind.size());
@@ -41,8 +47,6 @@ KernelMatrix::KernelMatrix(const DataSet::node2d &instances, SvmParam param) {
 
     self_dot_.resize(n_instances_);
     self_dot_.copy_from(csr_self_dot.data(), self_dot_.size());
-
-    nnz_ = csr_val.size();//number of nonzero
 
     //pre-compute diagonal elements
 
