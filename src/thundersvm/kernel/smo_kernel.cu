@@ -6,7 +6,8 @@
 #include <thrust/sort.h>
 #include <thrust/system/cuda/detail/par.h>
 namespace svm_kernel {
-
+    /// @brief: reduce min in 1-D Block with step decrease by power of 2.
+    /// @note squential addressing, less bank conflict & coalesced access.
     template<typename T>
     __device__ int get_block_min(const T *values, int *index) {
         int tid = threadIdx.x;
@@ -60,6 +61,7 @@ namespace svm_kernel {
             int i = get_block_min(f_val2reduce, f_idx2reduce);
             float_type up_value = f_val2reduce[i];
             kernel_type kIwsI = k_mat_rows[row_len * i + wsi];//K[i, wsi]
+            /// @attention: necessary sync.
             __syncthreads();
 
             if (is_I_low(a, y, Cp, Cn))

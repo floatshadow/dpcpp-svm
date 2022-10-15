@@ -4,6 +4,9 @@ build/
 result.txt
 demo.model
 
+# Profiling
+vtune-output/
+
 # Editor Settings
 .vscode/
 .idea/

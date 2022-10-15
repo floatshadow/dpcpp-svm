@@ -13,6 +13,7 @@ using namespace oneapi::mkl;
 using namespace sycl;
 
 namespace svm_kernel {
+    /// @brief fill the sparse data into dense matrix.
     void
     get_working_set_ins(const SyncArray<kernel_type> &val, const SyncArray<int> &col_ind, const SyncArray<int> &row_ptr,
                             const SyncArray<int> &data_row_idx, SyncArray<kernel_type> &data_rows, int m, int n) {

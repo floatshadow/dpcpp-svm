@@ -165,6 +165,11 @@ KernelMatrix::dns_dns_mul(const SyncArray<kernel_type> &dense_mat, int n_rows,
 }
 #endif
 void KernelMatrix::get_dot_product_dns_csr(const SyncArray<int> &idx, SyncArray<kernel_type> &dot_product) const {
+    /// @note: instance data rows, dense matrix.
+    /// select ws_size rows instances (csr sparse data) and fill the matrix.
+    /// It is actually a csr @ csr, but as we need a desnse mat ouput, we use csr @ dense.
+    /// @attention: oneMKL offers a oneapi::mkl::sparse::matmat for sparse-sparse matmul,
+    /// but the result C is a sparse matrix.
     SyncArray<kernel_type> data_rows(idx.size() * n_features_);
     data_rows.mem_set(0);
     get_working_set_ins(val_, col_ind_, row_ptr_, idx, data_rows, idx.size(), n_features_);

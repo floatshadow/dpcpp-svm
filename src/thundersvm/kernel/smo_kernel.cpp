@@ -13,7 +13,9 @@
 #include <omp.h>
 
 namespace svm_kernel {
-    
+    /* Merrill, 2015*/
+    /// @brief: this kernel apply parallel reduction to twice to 
+    /// find 2 extreme training instance. 
     void c_smo_solve_kernel(const int *label, float_type *f_val, float_type *alpha, float_type *alpha_diff,
                             const int *working_set,
                             int ws_size,
@@ -53,6 +55,7 @@ namespace svm_kernel {
                     }
             }
             for (int tid = 0; tid < ws_size; ++tid) {
+                /* row_len = n_instances */
                 kIwsI[tid] = k_mat_rows[row_len * i + working_set[tid]];//K[i, wsi]
             }
             float_type low_value = -INFINITY;
@@ -307,6 +310,7 @@ namespace svm_kernel {
              const SyncArray<kernel_type> &k_mat_rows,
              int n_instances) {
         //"n_instances" equals to the number of rows of the whole kernel matrix for both SVC and SVR.
+        /// @attention Use device_data with modified syncarray.
         float_type *f_data = f.host_data();
         const float_type *alpha_diff_data = alpha_diff.host_data();
         const kernel_type *k_mat_rows_data = k_mat_rows.host_data();
@@ -316,6 +320,7 @@ namespace svm_kernel {
             for (int i = 0; i < alpha_diff.size(); ++i) {
                 float_type d = alpha_diff_data[i];
                 if (d != 0) {
+                    /// @attention: cache un-friendly.
                     sum_diff += d * k_mat_rows_data[i * n_instances + idx];
                 }
             }

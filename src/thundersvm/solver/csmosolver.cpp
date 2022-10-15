@@ -17,7 +17,7 @@ CSMOSolver::solve(const KernelMatrix &k_mat, const SyncArray<int> &y, SyncArray<
                   int out_max_iter) const {
     int n_instances = k_mat.n_instances();
     int q = ws_size / 2;
-
+    /// @attention: each time update q violating instance to refresh working set.
     SyncArray<int> working_set(ws_size);
     SyncArray<int> working_set_first_half(q);
     SyncArray<int> working_set_last_half(q);
@@ -79,16 +79,22 @@ CSMOSolver::solve(const KernelMatrix &k_mat, const SyncArray<int> &y, SyncArray<
             /// @attention: syncmem now swaps owenership.
             // working_set_first_half.copy_from(working_set_last_half);
             working_set_first_half.swap(working_set_last_half);
+            /// @attention: weired as two ws_half SyncArray has no ownership 
+            /// but just refer to the working_set.
+            /// So the loop below set indicator only repeat \p p times.
             int *working_set_data = working_set.host_data();
             for (int i = 0; i < q; ++i) {
                 ws_indicator[working_set_data[i]] = 1;
             }
+            /// @note: `selct_working_set` hard to parallelize.
             select_working_set(ws_indicator, f_idx2sort, y, alpha, Cp, Cn, working_set_last_half);
             // k_mat_rows_first_half.copy_from(k_mat_rows_last_half);
             k_mat_rows_first_half.swap(k_mat_rows_last_half);
+            /// @attention: hotspots 1.
             k_mat.get_rows(working_set_last_half, k_mat_rows_last_half);
         }
         //local smo
+        /// @attention: hotspots 2.
         smo_kernel(y, f_val, alpha, alpha_diff, working_set, Cp, Cn, k_mat_rows, k_mat.diag(), n_instances, eps, diff,
                    max_iter);
         //update f
@@ -152,8 +158,13 @@ CSMOSolver::select_working_set(vector<int> &ws_indicator, const SyncArray<int> &
     const int *y_data = y.host_data();
     const float_type *alpha_data = alpha.host_data();
     int *working_set_data = working_set.host_data();
+    /* Joachims, 1998 */
+    /// @attention: this selection generally guarantees \p u and \p l are pairs.
+    /// and are stored in the style [u0, l0], [u1, l1],
+    /// but these us and ls doe NOT follow the constraints in 2-size working set selection. 
     while (n_selected < working_set.size()) {
         int i;
+        /* select index u = argmin_{i}\{ f_i | x_i \in X_upper \} */
         if (p_left < n_instances) {
             i = index[p_left];
             while (ws_indicator[i] == 1 || !is_I_up(alpha_data[i], y_data[i], Cp, Cn)) {
@@ -167,6 +178,7 @@ CSMOSolver::select_working_set(vector<int> &ws_indicator, const SyncArray<int> &
                 ws_indicator[i] = 1;
             }
         }
+        /* select index l = argmax_{i}\{ (f_u - f_i)^2 \eta_{i} | f_u < f_i, x_i \in X_lower  \} */
         if (p_right >= 0) {
             i = index[p_right];
             while (ws_indicator[i] == 1 || !is_I_low(alpha_data[i], y_data[i], Cp, Cn)) {
