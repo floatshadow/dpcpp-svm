@@ -4,32 +4,62 @@
 
 #include "thundersvm/thundersvm.h"
 #include <thundersvm/kernel/kernelmatrix_kernel.h>
-#include <Eigen/Dense>
-#include <Eigen/Sparse>
 #include <thundersvm/util/sycl_common.h>
 #include <oneapi/mkl.hpp>
 #include <oneapi/dpl/cmath>
+#ifndef USE_GPU
+#include <Eigen/Dense>
+#include <Eigen/Sparse>
+#endif
+
 using namespace oneapi::mkl;
 using namespace sycl;
+
+template <size_t round_base> 
+constexpr size_t round_up(size_t size) {
+    static_assert((round_base & (round_base - 1)) == 0);
+    return (size + round_base - 1) & (~(round_base - 1));
+}
 
 namespace svm_kernel {
     /// @brief fill the sparse data into dense matrix.
     void
     get_working_set_ins(const SyncArray<kernel_type> &val, const SyncArray<int> &col_ind, const SyncArray<int> &row_ptr,
                             const SyncArray<int> &data_row_idx, SyncArray<kernel_type> &data_rows, int m, int n) {
-        const int *data_row_idx_data = data_row_idx.host_data();
-        kernel_type *data_rows_data = data_rows.host_data();
-        const int *row_ptr_data = row_ptr.host_data();
-        const int *col_ind_data = col_ind.host_data();
-        const kernel_type *val_data = val.host_data();
-#pragma omp parallel for schedule(guided)
-        for (int i = 0; i < m; i++) {
-            int row = data_row_idx_data[i];
-            for (int j = row_ptr_data[row]; j < row_ptr_data[row + 1]; ++j) {
-                int col = col_ind_data[j];
-                data_rows_data[i * n + col] = val_data[j]; //row major
-            }
-        }
+        const int *data_row_idx_data = data_row_idx.device_data();
+        kernel_type *data_rows_data = data_rows.device_data();
+        const int *row_ptr_data = row_ptr.device_data();
+        const int *col_ind_data = col_ind.device_data();
+        const kernel_type *val_data = val.device_data();
+// #pragma omp parallel for schedule(guided)
+//         for (int i = 0; i < m; i++) {
+//             int row = data_row_idx_data[i];
+//             for (int j = row_ptr_data[row]; j < row_ptr_data[row + 1]; ++j) {
+//                 int col = col_ind_data[j];
+//                 data_rows_data[i * n + col] = val_data[j]; //row major
+//             }
+//         }
+        auto &q = thunder::get_sycl_queue();
+        constexpr size_t work_group_size = 256;
+        size_t global_group_size = round_up<work_group_size>(m);
+        q.submit([&](handler &h){
+            constexpr size_t sub_group_size = 8U;
+            h.parallel_for(sycl::nd_range<1>(global_group_size, work_group_size),
+                [=](nd_item<1> item)[[intel::reqd_sub_group_size(sub_group_size)]]
+            {
+                int i = item.get_global_linear_id();
+                if (i >= m)
+                    return;
+                
+                int row = data_row_idx_data[i];
+                int col_data_start = row_ptr_data[row];
+                int col_data_end   = row_ptr_data[row + 1];
+            #pragma unroll
+                for (int j = col_data_start; j < col_data_end; ++j) {
+                    data_rows_data[i * n + col_ind_data[j]] = val_data[j];
+                }     
+            });
+        }).wait();
     }
 
     void
@@ -84,7 +114,46 @@ namespace svm_kernel {
         }
     }
 
+#ifdef USE_GPU
     /// @attention: \p Is called in CPU only train.
+    void RBF_kernel(const SyncArray<int> &self_dot0_idx, const SyncArray<kernel_type> &self_dot1,
+                    SyncArray<kernel_type> &dot_product, int m, int n, kernel_type gamma)
+    {
+        kernel_type *dot_product_data = dot_product.device_data();
+        const int *self_dot0_idx_data = self_dot0_idx.device_data();
+        const kernel_type *self_dot1_data = self_dot1.device_data();
+        auto &q = thunder::get_sycl_queue();
+        constexpr size_t work_group_size = 512; // based on 64kb local memory, and each dim work_group limit.
+        size_t global_group_size = round_up<work_group_size>(n);
+        q.submit([&](handler &h) {
+             constexpr size_t sub_group_size = 8U;
+             sycl::accessor<kernel_type, 1, sycl::access::mode::read_write, sycl::access::target::local> self_dot_j(
+                 work_group_size, h);
+             h.parallel_for(sycl::nd_range<1>(global_group_size, work_group_size),
+                            [=](nd_item<1> item) [[intel::reqd_sub_group_size(sub_group_size)]] {
+                                int j = item.get_global_linear_id();
+                                if (j >= n)
+                                    return;
+
+                                auto sg = item.get_sub_group();
+                                int local_j = item.get_local_id(0);
+                                self_dot_j[local_j] = self_dot1_data[j]; // writes local memory.
+
+                                using global_ptr =
+                                    sycl::multi_ptr<const kernel_type, sycl::access::address_space::global_space>;
+#pragma unroll
+                                for (int i = 0; i < m; ++i)
+                                {
+                                    // kernel_type self_dot_i =
+                                    // sg.load(global_ptr(&(self_dot1_data[self_dot0_idx_data[i]])));
+                                    kernel_type self_dot_i = self_dot1_data[self_dot0_idx_data[i]];
+                                    dot_product_data[i * n + j] = expf(
+                                        -(self_dot_i + self_dot1_data[j] - dot_product_data[i * n + j] * 2) * gamma);
+                                }
+                            });
+         }).wait();
+    }
+#else
     void
     RBF_kernel(const SyncArray<int> &self_dot0_idx, const SyncArray<kernel_type> &self_dot1,
                SyncArray<kernel_type> &dot_product, int m,
@@ -101,6 +170,8 @@ namespace svm_kernel {
             }
         }
     }
+#endif
+
 
     void poly_kernel(SyncArray<kernel_type> &dot_product, kernel_type gamma, kernel_type coef0, int degree, int mn) {
         kernel_type *dot_product_data = dot_product.host_data();
@@ -174,11 +245,12 @@ namespace svm_kernel {
         kernel_type one(1.0);
         kernel_type zero(0.0);
         auto &q = thunder::get_sycl_queue();
+
+#ifdef USE_GPU
         /// \brief Do Sparse Mat (m x k) @ trans(Dense Mat (n x k)) = Dense Mat (m x n), Column Major.
-        sparse::set_csr_data(handle, m, k, index_base::zero, 
-                            const_cast<int *>(csr_row_ptr.host_data()), 
-                            const_cast<int *>(csr_col_ind.host_data()), 
-                            const_cast<kernel_type *>(csr_val.host_data()));
+        sparse::set_csr_data(handle, m, k, index_base::zero, const_cast<int *>(csr_row_ptr.device_data()),
+                             const_cast<int *>(csr_col_ind.device_data()),
+                             const_cast<kernel_type *>(csr_val.device_data()));
         sparse::set_matrix_property(handle, sparse::property::sorted);
         /// @attention: weired trans.
         // AS MKL do not support dense matrix B `trans` we add a manual trans.
@@ -187,15 +259,23 @@ namespace svm_kernel {
         // for (int j = 0; j < n; ++j)
         //  for (int i = 0; i < k; ++i)
         //      dense_mat_trans[j * k + i] = dense_mat_data[i * n + i];
-        auto gemm_event = sparse::gemm(q, layout::col_major, transpose::nontrans, transpose::nontrans,
-                                             one, handle, 
-                                             const_cast<kernel_type *>(dense_mat.host_data()), n, k, // num_col, ldB
-                                             zero, const_cast<kernel_type *>(result.host_data()), m,
-                                             {});
+        auto gemm_event = sparse::gemm(q, layout::col_major, transpose::nontrans, transpose::nontrans, one, handle,
+                                       const_cast<kernel_type *>(dense_mat.device_data()), n, k, // num_col, ldB
+                                       zero, const_cast<kernel_type *>(result.device_data()), m, {});
+#else
+        sparse::set_csr_data(handle, m, k, index_base::zero, const_cast<int *>(csr_row_ptr.host_data()),
+                             const_cast<int *>(csr_col_ind.host_data()),
+                             const_cast<kernel_type *>(csr_val.host_data()));
+        sparse::set_matrix_property(handle, sparse::property::sorted);
+        auto gemm_event = sparse::gemm(q, layout::col_major, transpose::nontrans, transpose::nontrans, one, handle,
+                                       const_cast<kernel_type *>(dense_mat.host_data()), n, k, // num_col, ldB
+                                       zero, const_cast<kernel_type *>(result.host_data()), m, {});
+#endif
         sparse::release_matrix_handle(&handle, {gemm_event});
         // free(dense_mat_trans);
     }
 
+#ifndef USE_GPU
     void csr_csr_mul(int m, int n, int k, const SyncArray<kernel_type> &ws_val, const SyncArray<int> &ws_col_ind,
                      const SyncArray<int> &ws_row_ptr, const SyncArray<kernel_type> &csr_val,
                      const SyncArray<int> &csr_row_ptr, const SyncArray<int> &csr_col_ind, int nnz, int nnz2,
@@ -222,4 +302,5 @@ namespace svm_kernel {
                                                                                                  retMat.rows(),
                                                                                                  retMat.cols()) = retMat;
     }
+#endif
 }

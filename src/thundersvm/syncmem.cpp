@@ -24,9 +24,9 @@ namespace thunder {
                 free_host(host_ptr);
                 host_ptr = nullptr;
             }
-#ifdef USE_CUDA
+#ifdef USE_GPU
             if (device_ptr && own_device_data) {
-                CUDA_CHECK(cudaFree(device_ptr));
+                sycl::free(device_ptr, thunder::get_sycl_queue());
                 device_ptr = nullptr;
             }
 #endif
@@ -39,7 +39,7 @@ namespace thunder {
     }
 
     void *SyncMem::device_data() {
-#ifdef USE_CUDA
+#ifdef USE_GPU
         to_device();
 #else
         NO_GPU;
@@ -65,13 +65,13 @@ namespace thunder {
                 total_memory_size += size_;
                 break;
             case DEVICE:
-#ifdef USE_CUDA
+#ifdef USE_GPU
                 if (nullptr == host_ptr) {
-                    CUDA_CHECK(cudaMallocHost(&host_ptr, size_));
-                    CUDA_CHECK(cudaMemset(host_ptr, 0, size_));
+                    host_ptr = sycl::malloc_host(size_, thunder::get_sycl_queue());
+                    thunder::get_sycl_queue().memset(host_ptr, 0, size_).wait();
                     own_host_data = true;
                 }
-                CUDA_CHECK(cudaMemcpy(host_ptr, device_ptr, size_, cudaMemcpyDeviceToHost));
+                thunder::get_sycl_queue().memcpy(host_ptr, device_ptr, size_).wait();
                 head_ = HOST;
 #else
                 NO_GPU;
@@ -82,22 +82,22 @@ namespace thunder {
     }
 
     void SyncMem::to_device() {
-#ifdef USE_CUDA
+#ifdef USE_GPU
         switch (head_) {
             case UNINITIALIZED:
-                CUDA_CHECK(cudaMalloc(&device_ptr, size_));
-                CUDA_CHECK(cudaMemset(device_ptr, 0, size_));
+                device_ptr = sycl::malloc_device(size_, thunder::get_sycl_queue());
+                thunder::get_sycl_queue().memset(device_ptr, 0, size_).wait();
                 head_ = DEVICE;
                 own_device_data = true;
                 total_memory_size += size_;
                 break;
             case HOST:
                 if (nullptr == device_ptr) {
-                    CUDA_CHECK(cudaMalloc(&device_ptr, size_));
-                    CUDA_CHECK(cudaMemset(device_ptr, 0, size_));
+                    device_ptr = sycl::malloc_device(size_, thunder::get_sycl_queue());
+                    thunder::get_sycl_queue().memset(device_ptr, 0, size_).wait();
                     own_device_data = true;
                 }
-                CUDA_CHECK(cudaMemcpy(device_ptr, host_ptr, size_, cudaMemcpyHostToDevice));
+                thunder::get_sycl_queue().memcpy(device_ptr, host_ptr, size_).wait();
                 head_ = DEVICE;
                 break;
             case DEVICE:;
@@ -119,10 +119,10 @@ namespace thunder {
     }
 
     void SyncMem::set_device_data(void *data) {
-#ifdef USE_CUDA
+#ifdef USE_GPU
         CHECK_NOTNULL(data);
         if (own_device_data) {
-            CUDA_CHECK(cudaFree(device_data()));
+            sycl::free(device_data(), thunder::get_sycl_queue());
             total_memory_size -= size_;
         }
         device_ptr = data;

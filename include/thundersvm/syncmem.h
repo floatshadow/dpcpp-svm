@@ -6,27 +6,28 @@
 #define THUNDERSVM_SYNCMEM_H
 
 #include <thundersvm/thundersvm.h>
+#include <thundersvm/util/sycl_common.h>
 
 namespace thunder {
     inline void malloc_host(void **ptr, size_t size) {
-#ifdef USE_CUDA
-        CUDA_CHECK(cudaMallocHost(ptr, size));
+#ifdef USE_GPU
+        *ptr = sycl::malloc_host(size, thunder::get_sycl_queue());
 #else
         *ptr = malloc(size);
 #endif
     }
 
     inline void free_host(void *ptr) {
-#ifdef USE_CUDA
-        CUDA_CHECK(cudaFreeHost(ptr));
+#ifdef USE_GPU
+        sycl::free(ptr, thunder::get_sycl_queue());
 #else
         free(ptr);
 #endif
     }
 
     inline void device_mem_copy(void *dst, const void *src, size_t size) {
-#ifdef USE_CUDA
-        CUDA_CHECK(cudaMemcpy(dst, src, size, cudaMemcpyDefault));
+#ifdef USE_GPU
+        thunder::get_sycl_queue().memcpy(dst, src, size).wait();
 #else
         NO_GPU;
 #endif

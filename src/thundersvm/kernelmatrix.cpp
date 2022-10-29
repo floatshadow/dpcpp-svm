@@ -77,7 +77,7 @@ KernelMatrix::KernelMatrix(const DataSet::node2d &instances, SvmParam param) {
 void KernelMatrix::get_rows(const SyncArray<int> &idx,
                             SyncArray<kernel_type> &kernel_rows) const {//compute multiple rows of kernel matrix according to idx
     CHECK_GE(kernel_rows.size(), idx.size() * n_instances_) << "kernel_rows memory is too small";
-#ifdef USE_CUDA
+#ifdef USE_GPU
     get_dot_product_dns_csr(idx, kernel_rows);
 #else
 	if(n_features_ < 1000000)
@@ -149,7 +149,7 @@ KernelMatrix::dns_csr_mul(const SyncArray<kernel_type> &dense_mat, int n_rows, S
 }
 
 
-#ifndef USE_CUDA
+#ifndef USE_GPU
 void
 KernelMatrix::csr_csr_mul(const SyncArray<kernel_type> &ws_val, int n_rows, const SyncArray<int> &ws_col_ind,
                           const SyncArray<int> &ws_row_ptr, SyncArray<kernel_type> &result) const {
@@ -186,7 +186,7 @@ void KernelMatrix::get_dot_product(const DataSet::node2d &instances, SyncArray<k
         for (int j = 0; j < instances[i].size(); ++j) {
             if (instances[i][j].index < n_features_) {
                 //col major for cuSPARSE, row major for Eigen
-#ifdef USE_CUDA
+#ifdef USE_GPU
                 dense_ins_data[instances[i][j].index * instances.size() + i] = instances[i][j].value;
 #else
                 dense_ins_data[i * n_features_ + instances[i][j].index] = instances[i][j].value;
@@ -202,7 +202,7 @@ void KernelMatrix::get_dot_product(const DataSet::node2d &instances, SyncArray<k
 
 
 
-#ifndef USE_CUDA
+#ifndef USE_GPU
 void KernelMatrix::get_dot_product_csr_csr(const SyncArray<int> &idx, SyncArray<kernel_type> &dot_product) const {
     SyncArray<kernel_type> ws_val;
     SyncArray<int> ws_col_ind;

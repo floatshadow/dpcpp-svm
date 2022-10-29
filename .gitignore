@@ -3,6 +3,8 @@ build/
 .cache/
 result.txt
 demo.model
+data
+run/
 
 # Profiling
 vtune-output/

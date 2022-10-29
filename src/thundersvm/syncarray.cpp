@@ -2,6 +2,7 @@
 // Created by jiashuai on 17-9-17.
 //
 #include "thundersvm/syncarray.h"
+#include <thundersvm/util/sycl_common.h>
 
 template<typename T>
 SyncArray<T>::SyncArray(size_t count):mem(new SyncMem(sizeof(T) * count)), size_(count) {
@@ -47,7 +48,7 @@ void SyncArray<T>::resize(size_t count) {
 
 template<typename T>
 void SyncArray<T>::copy_from(const T *source, size_t count) {
-#ifdef USE_CUDA
+#ifdef USE_GPU
     thunder::device_mem_copy(mem->device_data(), source, sizeof(T) * count);
 #else
     memcpy(mem->host_data(), source, sizeof(T) * count);
@@ -69,7 +70,7 @@ void SyncArray<T>::log(el::base::type::ostream_t &ostream) const {
 template<typename T>
 void SyncArray<T>::copy_from(const SyncArray<T> &source) {
     CHECK_EQ(size(), source.size()) << "destination and source count doesn't match";
-#ifdef USE_CUDA
+#ifdef USE_GPU
     copy_from(source.device_data(), source.size());
 #else
     copy_from(source.host_data(), source.size());
@@ -78,8 +79,8 @@ void SyncArray<T>::copy_from(const SyncArray<T> &source) {
 
 template<typename T>
 void SyncArray<T>::mem_set(const T &value) {
-#ifdef USE_CUDA
-    CUDA_CHECK(cudaMemset(device_data(), value, mem_size()));
+#ifdef USE_GPU
+    thunder::get_sycl_queue().memset(device_data(), value, mem_size()).wait();
 #else
     memset(host_data(), value, mem_size());
 #endif

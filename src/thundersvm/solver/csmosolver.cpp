@@ -21,7 +21,7 @@ CSMOSolver::solve(const KernelMatrix &k_mat, const SyncArray<int> &y, SyncArray<
     SyncArray<int> working_set(ws_size);
     SyncArray<int> working_set_first_half(q);
     SyncArray<int> working_set_last_half(q);
-#ifdef USE_CUDA
+#ifdef USE_GPU
     working_set_first_half.set_device_data(working_set.device_data());
     working_set_last_half.set_device_data(&working_set.device_data()[q]);
 #endif
@@ -37,9 +37,12 @@ CSMOSolver::solve(const KernelMatrix &k_mat, const SyncArray<int> &y, SyncArray<
     SyncArray<kernel_type> k_mat_rows(ws_size * k_mat.n_instances());
     SyncArray<kernel_type> k_mat_rows_first_half(q * k_mat.n_instances());
     SyncArray<kernel_type> k_mat_rows_last_half(q * k_mat.n_instances());
-#ifdef USE_CUDA
+#ifdef USE_GPU
     k_mat_rows_first_half.set_device_data(k_mat_rows.device_data());
     k_mat_rows_last_half.set_device_data(&k_mat_rows.device_data()[q * k_mat.n_instances()]);
+    
+    // k_mat_rows_first_half.set_host_data(k_mat_rows.host_data());
+    // k_mat_rows_last_half.set_host_data(&k_mat_rows.host_data()[q * k_mat.n_instances()]);
 #else
     k_mat_rows_first_half.set_host_data(k_mat_rows.host_data());
     k_mat_rows_last_half.set_host_data(&k_mat_rows.host_data()[q * k_mat.n_instances()]);
@@ -92,6 +95,7 @@ CSMOSolver::solve(const KernelMatrix &k_mat, const SyncArray<int> &y, SyncArray<
             k_mat_rows_first_half.swap(k_mat_rows_last_half);
             /// @attention: hotspots 1.
             k_mat.get_rows(working_set_last_half, k_mat_rows_last_half);
+            k_mat_rows_last_half.device_data();
         }
         //local smo
         /// @attention: hotspots 2.
