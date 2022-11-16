@@ -21,6 +21,10 @@ constexpr size_t round_up(size_t size) {
     return (size + round_base - 1) & (~(round_base - 1));
 }
 
+constexpr size_t ceildiv(size_t n, size_t m) {
+    return (n + m - 1) / (m);
+}
+
 namespace svm_kernel {
     /// @brief fill the sparse data into dense matrix.
     void
@@ -241,17 +245,16 @@ namespace svm_kernel {
         // Eigen::Map<Eigen::Matrix<kernel_type, Eigen::Dynamic, Eigen::Dynamic, Eigen::ColMajor> >(result.host_data(),
         //                                                                                    retMat.rows(),
         //                                                                                    retMat.cols()) = retMat;
-        sparse::init_matrix_handle(&handle);
         kernel_type one(1.0);
         kernel_type zero(0.0);
         auto &q = thunder::get_sycl_queue();
 
 #ifdef USE_GPU
         /// \brief Do Sparse Mat (m x k) @ trans(Dense Mat (n x k)) = Dense Mat (m x n), Column Major.
-        sparse::set_csr_data(handle, m, k, index_base::zero, const_cast<int *>(csr_row_ptr.device_data()),
-                             const_cast<int *>(csr_col_ind.device_data()),
-                             const_cast<kernel_type *>(csr_val.device_data()));
-        sparse::set_matrix_property(handle, sparse::property::sorted);
+        // sparse::set_csr_data(handle, m, k, index_base::zero, const_cast<int *>(csr_row_ptr.device_data()),
+        //                      const_cast<int *>(csr_col_ind.device_data()),
+        //                      const_cast<kernel_type *>(csr_val.device_data()));
+        // sparse::set_matrix_property(handle, sparse::property::sorted);
         /// @attention: weired trans.
         // AS MKL do not support dense matrix B `trans` we add a manual trans.
         // kernel_type *dense_mat_trans = (kernel_type *)malloc(sizeof(kernel_type) * dense_mat.size());
@@ -259,10 +262,40 @@ namespace svm_kernel {
         // for (int j = 0; j < n; ++j)
         //  for (int i = 0; i < k; ++i)
         //      dense_mat_trans[j * k + i] = dense_mat_data[i * n + i];
-        auto gemm_event = sparse::gemm(q, layout::col_major, transpose::nontrans, transpose::nontrans, one, handle,
-                                       const_cast<kernel_type *>(dense_mat.device_data()), n, k, // num_col, ldB
-                                       zero, const_cast<kernel_type *>(result.device_data()), m, {});
+        // std::cout << m << " " << k << " " << n << std::endl;
+        auto &sub_queues = thunder::MutiTile::get_sub_queues();
+        size_t n_sub_devices = sub_queues.size();
+        size_t n_slice = ceildiv(n, n_sub_devices);
+        kernel_type *dense_mat_data = const_cast<kernel_type *>(dense_mat.device_data());
+        kernel_type *result_data = const_cast<kernel_type *>(result.device_data());
+
+        std::vector<sparse::matrix_handle_t> handles(n_sub_devices);
+        for (size_t i = 0; i < n_sub_devices; ++i) {
+            sparse::init_matrix_handle(&handles[i]);
+            sparse::set_csr_data(handles[i], m, k, index_base::zero, const_cast<int *>(csr_row_ptr.device_data()),
+                                 const_cast<int *>(csr_col_ind.device_data()),
+                                 const_cast<kernel_type *>(csr_val.device_data()));
+            sparse::set_matrix_property(handles[i], sparse::property::sorted);
+        }
+
+        for (size_t i = 0; i < n_sub_devices; ++i) {
+            size_t n_cols = std::min(n_slice, n - i * n_slice);
+            auto &Q = sub_queues[i];
+            auto gemm_event = sparse::gemm(Q, layout::col_major, transpose::nontrans, transpose::nontrans, one, handles[i],
+                                           dense_mat_data + i * n_slice * k, n_cols, k, // num_col, ldB
+                                           zero, result_data + i * n_slice * m, m, {});
+        }
+        for (size_t i = 0; i < n_sub_devices; ++i) {
+            auto &Q = sub_queues[i];
+            Q.wait_and_throw();
+        }
+
+        for (size_t i = 0; i < n_sub_devices; ++i) {
+            sparse::release_matrix_handle(&handles[i], {});
+        }
+
 #else
+        sparse::init_matrix_handle(&handle);
         sparse::set_csr_data(handle, m, k, index_base::zero, const_cast<int *>(csr_row_ptr.host_data()),
                              const_cast<int *>(csr_col_ind.host_data()),
                              const_cast<kernel_type *>(csr_val.host_data()));
@@ -270,8 +303,8 @@ namespace svm_kernel {
         auto gemm_event = sparse::gemm(q, layout::col_major, transpose::nontrans, transpose::nontrans, one, handle,
                                        const_cast<kernel_type *>(dense_mat.host_data()), n, k, // num_col, ldB
                                        zero, const_cast<kernel_type *>(result.host_data()), m, {});
-#endif
         sparse::release_matrix_handle(&handle, {gemm_event});
+#endif
         // free(dense_mat_trans);
     }
 

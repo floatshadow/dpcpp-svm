@@ -31,6 +31,7 @@ KernelMatrix::KernelMatrix(const DataSet::node2d &instances, SvmParam param) {
     n_features_++;
 
     nnz_ = csr_val.size();//number of nonzero
+    sparsity_ = (float)nnz_ / (n_instances_ * n_features_);
     /// @attention: MKL CSR spec.
     // CHECK_EQ(csr_row_ptr[n_instances_], nnz_) << " CHECK CSR";
     // CHECK_EQ(csr_row_ptr.size(), n_instances_) << " CHECK CSR";

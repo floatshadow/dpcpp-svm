@@ -12,11 +12,15 @@
 #include <thundersvm/util/metric.h>
 #include "thundersvm/cmdparser.h"
 
+#include <thundersvm/util/sycl_common.h>
+
 #ifdef _WIN32
 INITIALIZE_EASYLOGGINGPP
 #endif
 
 int main(int argc, char **argv) {
+    thunder::MutiTile::create_sub_devices();
+
     try {
 		el::Loggers::addFlag(el::LoggingFlag::FixedTimeFormat);
         CMDParser parser;
