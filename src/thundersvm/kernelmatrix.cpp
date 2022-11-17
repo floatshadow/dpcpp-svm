@@ -150,7 +150,7 @@ KernelMatrix::dns_csr_mul(const SyncArray<kernel_type> &dense_mat, int n_rows, S
 }
 
 
-#ifndef USE_GPU
+
 void
 KernelMatrix::csr_csr_mul(const SyncArray<kernel_type> &ws_val, int n_rows, const SyncArray<int> &ws_col_ind,
                           const SyncArray<int> &ws_row_ptr, SyncArray<kernel_type> &result) const {
@@ -164,7 +164,8 @@ KernelMatrix::dns_dns_mul(const SyncArray<kernel_type> &dense_mat, int n_rows,
     CHECK_EQ(dense_mat.size(), n_rows * n_features_) << "dense matrix features doesn't match";
     svm_kernel::dns_dns_mul(n_instances_, n_rows, n_features_, dense_mat, origin_dense, result);
 }
-#endif
+
+
 void KernelMatrix::get_dot_product_dns_csr(const SyncArray<int> &idx, SyncArray<kernel_type> &dot_product) const {
     /// @note: instance data rows, dense matrix.
     /// select ws_size rows instances (csr sparse data) and fill the matrix.
@@ -203,7 +204,6 @@ void KernelMatrix::get_dot_product(const DataSet::node2d &instances, SyncArray<k
 
 
 
-#ifndef USE_GPU
 void KernelMatrix::get_dot_product_csr_csr(const SyncArray<int> &idx, SyncArray<kernel_type> &dot_product) const {
     SyncArray<kernel_type> ws_val;
     SyncArray<int> ws_col_ind;
@@ -226,4 +226,4 @@ void KernelMatrix::get_dot_product_dns_dns(const SyncArray<int> &idx, SyncArray<
     get_working_set_ins(val_, col_ind_, row_ptr_, origin_idx, origin_dense, origin_idx.size(), n_features_);
     dns_dns_mul(data_rows, idx.size(), origin_dense, dot_product);
 }
-#endif
+

@@ -47,7 +47,7 @@ namespace svm_kernel {
     void c_smo_solve_kernel(const int *label, float_type *f_val, float_type *alpha, float_type *alpha_diff,
                             const int *working_set, int ws_size, float_type Cp, float_type Cn,
                             const kernel_type *k_mat_rows, const kernel_type *k_mat_diag, int row_len, float_type eps,
-                            float_type *diff, int max_iter, sycl::nd_item<3> item_ct1, uint8_t *dpct_local)
+                            float_type *diff, int max_iter, sycl::nd_item<3> item_ct1, volatile uint8_t *dpct_local)
     {
         //"row_len" equals to the number of instances in the original training dataset.
         // allocate shared memory

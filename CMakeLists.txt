@@ -14,7 +14,7 @@ option(USE_CUDA "Compile with CUDA" OFF)
 option(USE_GPU "Compile with NVIDIA/INTEL GPU support" OFF)
 option(BUILD_TESTS "Build Tests" OFF)
 option(USE_DOUBLE "Use double as kernel_type" OFF)
-# set(CMAKE_VERBOSE_MAKEFILE ON)
+set(CMAKE_VERBOSE_MAKEFILE ON)
 
 if(USE_DOUBLE)
     message("Use double as kernel_type")

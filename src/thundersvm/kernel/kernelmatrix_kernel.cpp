@@ -26,23 +26,10 @@ constexpr size_t ceildiv(size_t n, size_t m) {
 }
 
 namespace svm_kernel {
-    /// @brief fill the sparse data into dense matrix.
-    void
-    get_working_set_ins(const SyncArray<kernel_type> &val, const SyncArray<int> &col_ind, const SyncArray<int> &row_ptr,
-                            const SyncArray<int> &data_row_idx, SyncArray<kernel_type> &data_rows, int m, int n) {
-        const int *data_row_idx_data = data_row_idx.device_data();
-        kernel_type *data_rows_data = data_rows.device_data();
-        const int *row_ptr_data = row_ptr.device_data();
-        const int *col_ind_data = col_ind.device_data();
-        const kernel_type *val_data = val.device_data();
-// #pragma omp parallel for schedule(guided)
-//         for (int i = 0; i < m; i++) {
-//             int row = data_row_idx_data[i];
-//             for (int j = row_ptr_data[row]; j < row_ptr_data[row + 1]; ++j) {
-//                 int col = col_ind_data[j];
-//                 data_rows_data[i * n + col] = val_data[j]; //row major
-//             }
-//         }
+    void kernel_get_working_set_ins(const kernel_type *val, const int *col_ind, const int *row_ptr, 
+                               const int *data_row_idx, kernel_type *data_rows,
+                               int m, int n) 
+    {
         auto &q = thunder::get_sycl_queue();
         constexpr size_t work_group_size = 256;
         size_t global_group_size = round_up<work_group_size>(m);
@@ -55,15 +42,30 @@ namespace svm_kernel {
                 if (i >= m)
                     return;
                 
-                int row = data_row_idx_data[i];
-                int col_data_start = row_ptr_data[row];
-                int col_data_end   = row_ptr_data[row + 1];
+                int row = data_row_idx[i];
+                int col_data_start = row_ptr[row];
+                int col_data_end   = row_ptr[row + 1];
             #pragma unroll
                 for (int j = col_data_start; j < col_data_end; ++j) {
-                    data_rows_data[i * n + col_ind_data[j]] = val_data[j];
+                    data_rows[i * n + col_ind[j]] = val[j];
                 }     
             });
         }).wait();
+    }
+
+    /// @brief fill the sparse data into dense matrix.
+    void
+    get_working_set_ins(const SyncArray<kernel_type> &val, const SyncArray<int> &col_ind, const SyncArray<int> &row_ptr,
+                            const SyncArray<int> &data_row_idx, SyncArray<kernel_type> &data_rows, int m, int n) {
+        const int *data_row_idx_data = data_row_idx.device_data();
+        kernel_type *data_rows_data = data_rows.device_data();
+        const int *row_ptr_data = row_ptr.device_data();
+        const int *col_ind_data = col_ind.device_data();
+        const kernel_type *val_data = val.device_data();
+        kernel_get_working_set_ins(val_data, col_ind_data, row_ptr_data, 
+                                   data_row_idx_data, data_rows_data,
+                                   m, n);
+        
     }
 
     void
@@ -232,7 +234,6 @@ namespace svm_kernel {
         }
     }
 
-    sparse::matrix_handle_t handle;
     /// @attention: Use device_data with modified syncarray.
     void dns_csr_mul(int m, int n, int k, const SyncArray<kernel_type> &dense_mat, const SyncArray<kernel_type> &csr_val,
                      const SyncArray<int> &csr_row_ptr, const SyncArray<int> &csr_col_ind, int nnz,
@@ -245,6 +246,7 @@ namespace svm_kernel {
         // Eigen::Map<Eigen::Matrix<kernel_type, Eigen::Dynamic, Eigen::Dynamic, Eigen::ColMajor> >(result.host_data(),
         //                                                                                    retMat.rows(),
         //                                                                                    retMat.cols()) = retMat;
+        sparse::matrix_handle_t handle;
         kernel_type one(1.0);
         kernel_type zero(0.0);
         auto &q = thunder::get_sycl_queue();
@@ -308,32 +310,123 @@ namespace svm_kernel {
         // free(dense_mat_trans);
     }
 
-#ifndef USE_GPU
+
     void csr_csr_mul(int m, int n, int k, const SyncArray<kernel_type> &ws_val, const SyncArray<int> &ws_col_ind,
                      const SyncArray<int> &ws_row_ptr, const SyncArray<kernel_type> &csr_val,
                      const SyncArray<int> &csr_row_ptr, const SyncArray<int> &csr_col_ind, int nnz, int nnz2,
                      SyncArray<kernel_type> &result) {
-        Eigen::Map<const Eigen::SparseMatrix<kernel_type, Eigen::RowMajor>> sparseMat1(m, k, nnz, csr_row_ptr.host_data(),
-                                                                                      csr_col_ind.host_data(),
-                                                                                      csr_val.host_data());
-        Eigen::Map<const Eigen::SparseMatrix<kernel_type>> sparseMat2(k, n, nnz2, ws_row_ptr.host_data(),
-                                                                      ws_col_ind.host_data(),
-                                                                      ws_val.host_data());
-        Eigen::Matrix<kernel_type, Eigen::Dynamic, Eigen::Dynamic, Eigen::ColMajor> retMat = sparseMat1 * sparseMat2;
-        Eigen::Map<Eigen::Matrix<kernel_type, Eigen::Dynamic, Eigen::Dynamic, Eigen::ColMajor> >(result.host_data(),
-                                                                                                 retMat.rows(),
-                                                                                                 retMat.cols()) = retMat;
+        // Eigen::Map<const Eigen::SparseMatrix<kernel_type, Eigen::RowMajor>> sparseMat1(m, k, nnz, csr_row_ptr.host_data(),
+        //                                                                               csr_col_ind.host_data(),
+        //                                                                               csr_val.host_data());
+        // Eigen::Map<const Eigen::SparseMatrix<kernel_type>> sparseMat2(k, n, nnz2, ws_row_ptr.host_data(),
+        //                                                               ws_col_ind.host_data(),
+        //                                                               ws_val.host_data());
+        // Eigen::Matrix<kernel_type, Eigen::Dynamic, Eigen::Dynamic, Eigen::ColMajor> retMat = sparseMat1 * sparseMat2;
+        // Eigen::Map<Eigen::Matrix<kernel_type, Eigen::Dynamic, Eigen::Dynamic, Eigen::ColMajor> >(result.host_data(),
+        //                                                                                          retMat.rows(),
+        //                                                                                          retMat.cols()) = retMat;
+        auto &q = thunder::get_sycl_queue();
+        sparse::matrix_handle_t A, B, C;
+        sparse::matmat_descr_t descr;
+        sparse::matrix_view_descr viewA, viewB, viewC;
+
+        sparse::init_matrix_handle(&A);
+        sparse::init_matrix_handle(&B);
+        sparse::init_matrix_handle(&C);
+        // before matmat 
+        sparse::set_csr_data(A, m, k, index_base::zero, const_cast<int *>(csr_row_ptr.device_data()),
+                             const_cast<int *>(csr_col_ind.device_data()),
+                             const_cast<kernel_type *>(csr_val.device_data()));
+        sparse::set_csr_data(B, k, n, index_base::zero, const_cast<int *>(ws_row_ptr.device_data()),
+                             const_cast<int *>(ws_col_ind.device_data()),
+                             const_cast<kernel_type *>(ws_val.device_data()));
+        // dummy C sparse matrix handle.
+        int c_nrows = m;
+        int c_ncols = n;
+        index_base c_index = index_base::zero;
+        int *c_row_ptr = nullptr;
+        int *c_col_ind = nullptr;
+        kernel_type *c_val = nullptr;
+        c_row_ptr = malloc_device<int>(c_nrows + 1, q);
+        sparse::set_csr_data(C, c_nrows, c_ncols, c_index, c_row_ptr, (int *)nullptr, (kernel_type *)nullptr);
+
+        // initialize the matmat descriptor.
+        viewA = viewB = viewC = sparse::matrix_view_descr::general;
+        sparse::init_matmat_descr(&descr);
+
+        sparse::set_matmat_data(descr, viewA, transpose::nontrans, viewB, transpose::nontrans, viewC);
+        // work estimation.
+        using sparse::matmat_request;
+        auto work_estimation_stage = sparse::matmat(q, A, B, C, matmat_request::work_estimation, descr, 
+                                                    nullptr, nullptr, {});
+        // compute.
+        auto compute_stage         = sparse::matmat(q, A, B, C, matmat_request::compute, descr,
+                                                    nullptr, nullptr, {work_estimation_stage});
+        // finalize, get nnz.
+        std::int64_t *c_nnz = malloc_shared<std::int64_t>(1, q);
+        auto finalize_nnz_stage    = sparse::matmat(q, A, B, C, matmat_request::get_nnz, descr,
+                                                    c_nnz, nullptr, {compute_stage});
+        // finalize, allocate C matrix array
+        c_col_ind = malloc_device<int>(*c_nnz, q);
+        c_val = malloc_device<kernel_type>(*c_nnz, q);
+        sparse::set_csr_data(C, c_nrows, c_ncols, c_index, c_row_ptr, c_col_ind, c_val);
+
+        // finalize, into C matrix
+        auto finalize_into_stage = sparse::matmat(q, A, B, C, matmat_request::finalize, descr,
+                                                  nullptr, nullptr, {finalize_nnz_stage});
+        
+        // fill into result syncarray.
+        kernel_type *result_data = result.device_data();
+        constexpr size_t work_group_size = 256;
+        size_t global_group_size = round_up<work_group_size>(m);
+        q.submit([&](handler &h){
+            constexpr size_t sub_group_size = 8U;
+            h.parallel_for(sycl::nd_range<1>(global_group_size, work_group_size),
+                [=](nd_item<1> item)[[intel::reqd_sub_group_size(sub_group_size)]]
+            {
+                int i = item.get_global_linear_id();
+                if (i >= m)
+                    return;
+                
+                int col_data_start = c_row_ptr[i];
+                int col_data_end   = c_row_ptr[i + 1];
+            #pragma unroll
+                for (int j = col_data_start; j < col_data_end; ++j) {
+                    result_data[i * n + c_col_ind[j]] = c_val[j];
+                }     
+            });
+        });
+
+        q.wait_and_throw();
+        // clean up
+        free(c_nnz, q);
+        free(c_col_ind, q);
+        free(c_row_ptr, q);
+        free(c_val, q);
+        sparse::release_matmat_descr(&descr);
+        sparse::release_matrix_handle(&A);
+        sparse::release_matrix_handle(&B);
+        sparse::release_matrix_handle(&C);
     }
 
     void dns_dns_mul(int m, int n, int k, const SyncArray<kernel_type> &dense_mat,
                      const SyncArray<kernel_type> &origin_dense, SyncArray<kernel_type> &result){
-        Eigen::Map<const Eigen::Matrix<kernel_type, Eigen::Dynamic, Eigen::Dynamic, Eigen::ColMajor>> denseMat(dense_mat.host_data(), k, n);
-        Eigen::Map<const Eigen::Matrix<kernel_type, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>>
-                originDenseMat(origin_dense.host_data(), m, k);
-        Eigen::Matrix<kernel_type, Eigen::Dynamic, Eigen::Dynamic, Eigen::ColMajor> retMat = originDenseMat * denseMat;
-        Eigen::Map<Eigen::Matrix<kernel_type, Eigen::Dynamic, Eigen::Dynamic, Eigen::ColMajor> >(result.host_data(),
-                                                                                                 retMat.rows(),
-                                                                                                 retMat.cols()) = retMat;
+        // Eigen::Map<const Eigen::Matrix<kernel_type, Eigen::Dynamic, Eigen::Dynamic, Eigen::ColMajor>> denseMat(dense_mat.host_data(), k, n);
+        // Eigen::Map<const Eigen::Matrix<kernel_type, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>>
+        //         originDenseMat(origin_dense.host_data(), m, k);
+        // Eigen::Matrix<kernel_type, Eigen::Dynamic, Eigen::Dynamic, Eigen::ColMajor> retMat = originDenseMat * denseMat;
+        // Eigen::Map<Eigen::Matrix<kernel_type, Eigen::Dynamic, Eigen::Dynamic, Eigen::ColMajor> >(result.host_data(),
+        //                                                                                          retMat.rows(),
+        //                                                                                          retMat.cols()) = retMat;
+        kernel_type one(1.0);
+        kernel_type zero(0.0);
+        auto &q = thunder::get_sycl_queue();
+        
+        auto gemm_event = blas::column_major::gemm(q, transpose::trans, transpose::nontrans,
+                                                   m, n, k,
+                                                   one, const_cast<kernel_type *>(origin_dense.device_data()), k,
+                                                   const_cast<kernel_type *>(dense_mat.device_data()), k, zero,
+                                                   result.device_data(), m, {});
+        q.wait_and_throw();
     }
-#endif
-}
+} // end namespce svm_kernel

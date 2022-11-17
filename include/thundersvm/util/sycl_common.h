@@ -58,7 +58,7 @@ namespace thunder{
                 sycl::info::partition_affinity_domain::next_partitionable);
             sycl::context tile_context(sub_devices);
             for (auto &D : sub_devices) {
-                sub_queues.emplace_back(tile_context, D);
+                sub_queues.emplace_back(tile_context, D, exception_handler);
             }
         }
         inline std::vector<sycl::queue> &get_sub_queues() { return sub_queues; }

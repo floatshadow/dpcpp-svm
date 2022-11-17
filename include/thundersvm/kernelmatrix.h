@@ -62,14 +62,15 @@ private:
     size_t n_features_;
     SvmParam param;
     float sparsity_;
+    SyncArray<kernel_type> dense_;
 
     void dns_csr_mul(const SyncArray<kernel_type> &dense_mat, int n_rows, SyncArray<kernel_type> &result) const;
-#ifndef USE_CUDA
+
     void csr_csr_mul(const SyncArray<kernel_type> &ws_val, int n_rows, const SyncArray<int> &ws_col_ind,
                               const SyncArray<int> &ws_row_ptr, SyncArray<kernel_type> &result) const;
     void dns_dns_mul(const SyncArray<kernel_type> &dense_mat, int n_rows,
                               const SyncArray<kernel_type> &origin_dense, SyncArray<kernel_type> &result) const;
-#endif
+    
     void get_dot_product_dns_csr(const SyncArray<int> &idx, SyncArray<kernel_type> &dot_product) const;
 
     void get_dot_product_csr_csr(const SyncArray<int> &idx, SyncArray<kernel_type> &dot_product) const;
